@@ -1,90 +1,128 @@
 import React, { Component } from "react";
-import DatePicker from "react-datepicker";
 import moment from "moment";
 
-import "react-datepicker/dist/react-datepicker.css";
-
+import DatePicker from "./DateSelector";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 
 class CreateRide extends Component {
 
     state = {
-        date: "",
-        startTime: "",
-        endTime: ""
+        departure_time: "",
+        arrival_time: "",
+        departure_location: "",
+        arrival_location: "",
+        hitch_initial_text: "",
+        num_seats: "",
+        isDriver: ""
+    }
+    //validar resultados antes de enviar para o servidor
+    //id user vai sempre, na check box um bool que identifica se é condutor ou não, validação no servidor
+    //falta botões em baixo
+
+    setDates = (date, startTime, endTime) => {
+
+        var departure_time =
+            moment(date).set({
+                hour: moment(startTime).get("hour"),
+                minute: moment(startTime).get("minute"),
+                second: moment(startTime).get("second"),
+            }).toDate()
+
+        var arrival_time =
+            moment(date).set({
+                hour: moment(endTime).get("hour"),
+                minute: moment(endTime).get("minute"),
+                second: moment(endTime).get("second"),
+            }).toDate()
+
+        this.setState({
+            departure_time,
+            arrival_time
+        })
+    }
+    onChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
     }
 
-    onChange = (value, type) => {
-
-        switch (type) {
-            case "startTime":
-                this.setState({
-                    [type]: value,
-                    "endTime": ""
-                })
-                break;
-
-            default:
-                this.setState({
-                    [type]: value
-                })
-                break;
-        }
+    onChangeDriver = (event) => {
+        this.setState({
+            isDriver: event.target.checked
+        })
     }
 
     render() {
         return (
             <div>
-                Monkey business<br />
-                startTime: {
-                    moment(this.state.date).set({
-                        hour: moment(this.state.startTime).get("hour"),
-                        minute: moment(this.state.startTime).get("minute"),
-                        second: moment(this.state.startTime).get("second"),
-                    }).toString()
-                }<br />
-                endTime: {
-                    moment(this.state.date).set({
-                        hour: moment(this.state.endTime).get("hour"),
-                        minute: moment(this.state.endTime).get("minute"),
-                        second: moment(this.state.endTime).get("second"),
-                    }).toString()
-                }
+                <h1 style={{ textAlign: "center" }}>Criar Boleia</h1>
 
-                <div>
-                    <DatePicker
-                        selected={this.state.date}
-                        onChange={newDate => this.onChange(newDate, "date")}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Insira uma data"
-                        minDate={new Date()}
-                    />
-                    <DatePicker
-                        selected={this.state.startTime}
-                        onChange={newStartTime => this.onChange(newStartTime, "startTime")}
-                        dateFormat="HH:mm"
-                        timeFormat="HH:mm"
-                        timeIntervals={15}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeCaption="Hora"
-                        placeholderText="Insira uma hora inicial"
-                    />
-                    <DatePicker
-                        selected={this.state.endTime}
-                        onChange={newEndTime => this.onChange(newEndTime, "endTime")}
-                        dateFormat="HH:mm"
-                        timeFormat="HH:mm"
-                        timeIntervals={15}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeCaption="Hora"
-                        placeholderText="Insira uma hora final"
-                        minTime={this.state.startTime ? moment(this.state.startTime).add(15, "minutes").toDate() : moment().add(15, "minutes").toDate()}
-                        maxTime={this.state.startTime ? moment(this.state.startTime).endOf("day").toDate() : moment().endOf("day").toDate()}
-                        disabled={!this.state.startTime}
-                    />
-                </div>
-            </div>
+                <OverlayTrigger trigger="click" placement="right" overlay={
+                    <Popover id="popover-basic">
+                        <Popover.Content>
+                            departure_time: {this.state.departure_time.toString()}<br />
+                            arrival_time: {this.state.arrival_time.toString()}<br />
+                            departure_location: {this.state.departure_location}<br />
+                            arrival_location: {this.state.arrival_location}<br />
+                            hitch_initial_text: {this.state.hitch_initial_text}<br />
+                            num_seats: {this.state.num_seats}<br />
+                            isDriver: {"" + this.state.isDriver}
+                        </Popover.Content>
+                    </Popover>
+                }>
+                    <Button variant="success">Click me to see data</Button>
+                </OverlayTrigger>
+
+
+                <DatePicker setDates={this.setDates} />
+
+                <Form style={{ marginTop: "5em" }}>
+                    <Row>
+                        <Col >
+                            <Form.Group>
+                                <Form.Label>Origem da boleia</Form.Label>
+                                <Form.Control onChange={this.onChange} name="departure_location" placeholder="Origem da boleia" />
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Destino da boleia</Form.Label>
+                                <Form.Control onChange={this.onChange} name="arrival_location" placeholder="Destino da boleia" />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row style={{ marginTop: "5em" }}>
+                        <Col md={4}>
+                            <Form.Check
+                                onChange={this.onChangeDriver}
+                                name="isDriver"
+                                type={"checkbox"}
+                                label={"É Condutor?"}
+                            />
+                        </Col>
+                        <Col md={4}>
+                            <Form.Group style={{ display: 'flex' }}>
+                                <Form.Label style = {{marginRight: '8px'}}>Lugares disponiveis</Form.Label>
+                                <Form.Control
+                                    onChange={this.onChange}
+                                    name="num_seats"
+                                    placeholder="número lugares"
+                                    min = {1}
+                                    type="number"
+                                    style = {{width: '50%'}}
+                                    disabled = {!this.state.isDriver}
+                                 />
+                            </Form.Group>
+                        </Col>
+                        <Col md={4}></Col>
+                    </Row>
+                </Form>
+            </div >
         );
     }
 }
