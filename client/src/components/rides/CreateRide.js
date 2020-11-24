@@ -18,11 +18,11 @@ class CreateRide extends Component {
         arrival_location: "",
         hitch_initial_text: "",
         num_seats: "",
-        isDriver: ""
+        id_user_driver: ""
     }
     //validar resultados antes de enviar para o servidor
     //id user vai sempre, na check box um bool que identifica se é condutor ou não, validação no servidor
-    //falta botões em baixo
+    
 
     setDates = (date, startTime, endTime) => {
 
@@ -53,7 +53,7 @@ class CreateRide extends Component {
 
     onChangeDriver = (event) => {
         this.setState({
-            isDriver: event.target.checked
+            id_user_driver: event.target.checked
         })
     }
 
@@ -71,7 +71,7 @@ class CreateRide extends Component {
                             arrival_location: {this.state.arrival_location}<br />
                             hitch_initial_text: {this.state.hitch_initial_text}<br />
                             num_seats: {this.state.num_seats}<br />
-                            isDriver: {"" + this.state.isDriver}
+                            id_user_driver: {"" + this.state.id_user_driver}
                         </Popover.Content>
                     </Popover>
                 }>
@@ -100,26 +100,37 @@ class CreateRide extends Component {
                         <Col md={4}>
                             <Form.Check
                                 onChange={this.onChangeDriver}
-                                name="isDriver"
+                                name="id_user_driver"
                                 type={"checkbox"}
                                 label={"É Condutor?"}
                             />
                         </Col>
                         <Col md={4}>
                             <Form.Group style={{ display: 'flex' }}>
-                                <Form.Label style = {{marginRight: '8px'}}>Lugares disponiveis</Form.Label>
+                                <Form.Label style={{ marginRight: '8px' }}>Lugares disponiveis</Form.Label>
                                 <Form.Control
                                     onChange={this.onChange}
                                     name="num_seats"
                                     placeholder="número lugares"
-                                    min = {1}
+                                    min={1}
                                     type="number"
-                                    style = {{width: '50%'}}
-                                    disabled = {!this.state.isDriver}
-                                 />
+                                    style={{ width: '50%' }}
+                                    disabled={!this.state.id_user_driver}
+                                />
                             </Form.Group>
                         </Col>
                         <Col md={4}></Col>
+                    </Row>
+                    <Row style = {{marginTop: "5em"}}>
+                        <Col md={8}>
+                            <Button>Comentários</Button>
+                        </Col>
+                        <Col md={1}>
+                            <Button variant="danger">Cancelar</Button>
+                        </Col>
+                        <Col md={3}>
+                            <Button>Submeter</Button>
+                        </Col>
                     </Row>
                 </Form>
             </div >

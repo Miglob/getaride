@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 
-import RideInformation from "./RideInformation";
+import RideInformation from "./rides/RideInformation";
 
-class MyRides extends Component {
+class Drivers extends Component {
 
     state = {
-        //rankings ainda não existem
-        //lado servidor converter id_user_driver para boleanos
         rides: [
             {
                 user_name: "António",
@@ -16,16 +14,6 @@ class MyRides extends Component {
                 departure_location: "Setúbal",
                 arrival_location: "IPS",
                 num_seats: 3,
-                id_user_driver: true,
-            },
-            {
-                user_name: "Mário",
-                ranking: 2,
-                departure_time: "2020-11-22 12:10:00",
-                arrival_time: "2020-11-22 12:25:00",
-                departure_location: "Paio Pires",
-                arrival_location: "IPS",
-                num_seats: 2,
                 id_user_driver: true,
             },
             {
@@ -41,14 +29,15 @@ class MyRides extends Component {
         ],
     }
 
+
     render() {
         return (
             <div>
-                <h1 style = {{textAlign: "center"}}>As minhas boleias</h1>
+                <h1 style = {{textAlign: "center"}}>Condutores</h1>
                 {this.state.rides.map(element => <RideInformation ride={element} />)}
             </div>
         );
     }
 }
 
-export default MyRides;
+export default Drivers;

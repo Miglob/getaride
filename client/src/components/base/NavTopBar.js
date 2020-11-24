@@ -41,6 +41,8 @@ class NavTopBar extends Component {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/action/3.4">Separated link</NavDropdown.Item>
                         </NavDropdown>
+                        <Nav.Link href="/drivers">Condutores</Nav.Link>
+                        <Nav.Link href="/passengers">Passageiros</Nav.Link>
                     </Nav>
 
                     <OverlayTrigger key="bottom"

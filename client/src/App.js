@@ -10,6 +10,8 @@ import Stuff from "./components/Stuff"
 import MyRides from "./components/rides/MyRides"
 import CreateRide from "./components/rides/CreateRide"
 import FindRide from "./components/rides/FindRide"
+import Drivers from "./components/Drivers"
+import Passengers from "./components/Passengers"
 
 
 function App() {
@@ -34,6 +36,12 @@ function App() {
             </Route>
             <Route path="/findRide">
               <FindRide />
+            </Route>
+            <Route path="/drivers">
+              <Drivers />
+            </Route>
+            <Route path="/passengers">
+              <Passengers />
             </Route>
             <Route path="/"> {/* este fica sempre em último, se todos os outros falharem calha neste */}
               <Home />
