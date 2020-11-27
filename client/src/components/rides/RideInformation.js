@@ -5,6 +5,7 @@ import moment from "moment";
 import Button from "react-bootstrap/Button";
 
 import monkey1 from '../../images/monkey1.gif';
+import MyRideDetails from "./MyRideDetails";
 
 
 
@@ -30,8 +31,8 @@ class RideInformation extends Component {
                     </div>
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <div>
-                            {this.props.ride.id_user_driver ? ("Oferece: " + this.props.ride.num_seats + " lugares") : ""}<br />
-                            <Button size="sm" style={{ marginTop: "0.5em" }}><b>+ Detalhes</b></Button><br />
+                            {this.props.ride.id_user_driver ? ("Oferece: " + this.props.ride.num_seats + " lugares") : "Precisa de 1 lugar"}<br />
+                            <MyRideDetails ride={this.props.ride}/> <br />    
                             <Button size="sm" variant="danger" style={{ marginTop: "0.5em" }}><b>Anular</b></Button>
                         </div>
                     </div>
