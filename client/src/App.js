@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 
-import NavTopBar from "./components/base/NavTopBar"
-import Home from "./components/Home"
-import Stuff from "./components/Stuff"
+import NavTopBar from "./components/base/NavTopBar";
+import Home from "./components/Home";
+import Stuff from "./components/Stuff";
 
 function App() {
   return (
