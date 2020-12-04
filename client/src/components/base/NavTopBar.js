@@ -43,6 +43,7 @@ class NavTopBar extends Component {
                         </NavDropdown>
                         <Nav.Link href="/drivers">Condutores</Nav.Link>
                         <Nav.Link href="/passengers">Passageiros</Nav.Link>
+                        <Nav.Link href="/ranking">Ranking</Nav.Link>
                     </Nav>
 
                     <OverlayTrigger key="bottom"
