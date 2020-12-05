@@ -16,6 +16,8 @@ import "react-datepicker/dist/react-datepicker.css";
 
 class FindRide extends Component {
 
+
+
     state = {
 
         searchName: "",
@@ -28,6 +30,10 @@ class FindRide extends Component {
 
         //rankings ainda não existem
         //lado servidor converter id_user_driver para boleanos
+        //falta botão para confirmar o user(passageiro) na boleia nos detalhes
+        //tirar o botão anular
+
+
         rides: [
             {
                 user_name: "António",

@@ -8,6 +8,7 @@ class MyRides extends Component {
     state = {
         //rankings ainda não existem
         //lado servidor converter id_user_driver para boleanos
+        //lado do servidor popular um array de passageiros para as rides
         rides: [
             {
                 user_name: "António",
@@ -18,6 +19,12 @@ class MyRides extends Component {
                 arrival_location: "IPS",
                 num_seats: 3,
                 id_user_driver: true,
+                passengers: [
+                    {
+                        user_name: "Maria Albertina",
+                        state: "Cancelada"
+                    }
+                ]
             },
             {
                 user_name: "Mário",
@@ -28,6 +35,12 @@ class MyRides extends Component {
                 arrival_location: "IPS",
                 num_seats: 2,
                 id_user_driver: true,
+                passengers: [
+                    {
+                        user_name: "Margarida",
+                        state: "Pendente"
+                    }
+                ]
             },
             {
                 user_name: "Ricardo",
@@ -38,6 +51,17 @@ class MyRides extends Component {
                 arrival_location: "IPS",
                 num_seats: 2,
                 id_user_driver: true,
+                passengers: [
+                    {
+                        user_name: "Ricardo Carmo",
+                        state: "Confirmada"
+                    },
+                    {
+                        user_name: "Antonio",
+                        state: "Confirmada"
+                    },
+
+                ]
             }
         ],
     }
@@ -45,7 +69,7 @@ class MyRides extends Component {
     render() {
         return (
             <div>
-                <h1 style = {{textAlign: "center"}}>As minhas boleias</h1>
+                <h1 style={{ textAlign: "center" }}>As minhas boleias</h1>
                 {this.state.rides.map(element => <RideInformation ride={element} />)}
             </div>
         );

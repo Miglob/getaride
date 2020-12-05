@@ -11,6 +11,8 @@ import MyRideDetails from "./MyRideDetails";
 
 class RideInformation extends Component {
 
+//Botão anular só  para aparecer se o utilizador for o dono da boleia
+
     static propTypes = {
         ride: PropTypes.object.isRequired
     }
@@ -32,7 +34,7 @@ class RideInformation extends Component {
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <div>
                             {this.props.ride.id_user_driver ? ("Oferece: " + this.props.ride.num_seats + " lugares") : "Precisa de 1 lugar"}<br />
-                            <MyRideDetails ride={this.props.ride}/> <br />    
+                            <MyRideDetails ride={this.props.ride}/> <br />   
                             <Button size="sm" variant="danger" style={{ marginTop: "0.5em" }}><b>Anular</b></Button>
                         </div>
                     </div>
