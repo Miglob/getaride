@@ -127,15 +127,8 @@ class FindRide extends Component {
             <div>
                 <h1 style={{ textAlign: "center" }}>Encontrar Boleia</h1>
                 <Form>
-                    <h2 style= {{marginTop: "0.5em"}}>Pesquisar </h2>
+                    <h2 style={{ marginTop: "0.5em" }}>Pesquisar </h2>
                     <Row>
-                        <Col style = {{display : "flex", justifyContent:"center"}}>
-                            <DropdownButton title="Escolha...">
-                                <Dropdown.Item onClick={() => this.setIsDriver(true)}>Condutores</Dropdown.Item>
-                                <Dropdown.Item onClick={() => this.setIsDriver(false)}>Passageiros</Dropdown.Item>
-                                <Dropdown.Item onClick={() => this.setIsDriver("")}>Condutores e passageiros</Dropdown.Item>
-                            </DropdownButton>
-                        </Col>
                         <Col>
                             <Form.Group >
                                 <Form.Control
@@ -170,7 +163,7 @@ class FindRide extends Component {
                         </Col>
 
                     </Row>
-                    <h2 style= {{marginTop: "0.5em"}}>Lista de boleias</h2>
+                    <h2 style={{ marginTop: "0.5em" }}>Lista de boleias</h2>
                     {this.state.searchResults.map(element => <Row><RideInformation ride={element} /></Row>)}
                 </Form>
             </div>

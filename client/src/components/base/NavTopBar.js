@@ -41,16 +41,18 @@ class NavTopBar extends Component {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/action/3.4">Separated link</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link href="/drivers">Condutores</Nav.Link>
-                        <Nav.Link href="/passengers">Passageiros</Nav.Link>
                         <Nav.Link href="/ranking">Ranking</Nav.Link>
                     </Nav>
-
+                    <Button variant="outline-primary" 
+                            style={{  marginRight: "2.5em" }}>Sign up</Button>{' '}
                     <OverlayTrigger key="bottom"
                         placement="bottom"
                         overlay={<Tooltip id={`tooltip-bottom`}>eu ainda não funciono :D</Tooltip>}>
                         <Button variant="secondary">Login</Button>
                     </OverlayTrigger>
+                    <Button variant="outline-primary" 
+                            style={{  marginLeft: "2.5em" }}>Sair</Button>{' '}
+                    
                 </Navbar.Collapse>
             </Navbar>
         );

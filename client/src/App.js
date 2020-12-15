@@ -10,8 +10,6 @@ import Stuff from "./components/Stuff"
 import MyRides from "./components/rides/MyRides"
 import CreateRide from "./components/rides/CreateRide"
 import FindRide from "./components/rides/FindRide"
-import Drivers from "./components/Drivers"
-import Passengers from "./components/Passengers"
 import Ranking from "./components/Ranking"
 
 
@@ -37,12 +35,6 @@ function App() {
             </Route>
             <Route path="/findRide">
               <FindRide />
-            </Route>
-            <Route path="/drivers">
-              <Drivers />
-            </Route>
-            <Route path="/passengers">
-              <Passengers />
             </Route>
             <Route path="/ranking">
               <Ranking />
