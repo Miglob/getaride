@@ -19,7 +19,7 @@ class NavTopBar extends Component {
     render() {
         return (
             <Navbar bg="light" expand="lg" style={{ minHeight: "10vh" }}>
-                <Navbar.Brand href="/home">
+                <Navbar.Brand href="/recentRides">
                     <img
                         alt=""
                         src={queen}
@@ -32,27 +32,25 @@ class NavTopBar extends Component {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/home">Home</Nav.Link>
+                        <Nav.Link href="/recentRides">Boleias recentes</Nav.Link>
                         <Nav.Link href="/stuff">Stuff</Nav.Link>
                         <NavDropdown title="Boleias">
                             <NavDropdown.Item href="/myRides">As tuas boleias</NavDropdown.Item>
                             <NavDropdown.Item href="/createRide">Criar Boleia</NavDropdown.Item>
-                            <NavDropdown.Item href="/findRide">Encontrar Boleia</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/action/3.4">Separated link</NavDropdown.Item>
+                            <NavDropdown.Item href="/findRides">Encontrar Boleia</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link href="/ranking">Ranking</Nav.Link>
                     </Nav>
-                    <Button variant="outline-primary" 
-                            style={{  marginRight: "2.5em" }}>Sign up</Button>{' '}
+                    <Button variant="outline-primary"
+                        style={{ marginRight: "2.5em" }}>Sign up</Button>{' '}
                     <OverlayTrigger key="bottom"
                         placement="bottom"
                         overlay={<Tooltip id={`tooltip-bottom`}>eu ainda não funciono :D</Tooltip>}>
                         <Button variant="secondary">Login</Button>
                     </OverlayTrigger>
-                    <Button variant="outline-primary" 
-                            style={{  marginLeft: "2.5em" }}>Sair</Button>{' '}
-                    
+                    <Button variant="outline-primary"
+                        style={{ marginLeft: "2.5em" }}>Sair</Button>{' '}
+
                 </Navbar.Collapse>
             </Navbar>
         );

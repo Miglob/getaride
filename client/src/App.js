@@ -5,11 +5,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 //componentes
 import NavTopBar from "./components/base/NavTopBar"
-import Home from "./components/Home"
+import RecentRides from "./components/rides/recentRides/RecentRides"
 import Stuff from "./components/Stuff"
-import MyRides from "./components/rides/MyRides"
+import MyRides from "./components/rides/myRides/MyRides"
 import CreateRide from "./components/rides/CreateRide"
-import FindRide from "./components/rides/FindRide"
+import FindRides from "./components/rides/findRides/FindRides"
 import Ranking from "./components/Ranking"
 
 
@@ -33,14 +33,14 @@ function App() {
             <Route path="/createRide">
               <CreateRide />
             </Route>
-            <Route path="/findRide">
-              <FindRide />
+            <Route path="/findRides">
+              <FindRides />
             </Route>
             <Route path="/ranking">
               <Ranking />
             </Route>
             <Route path="/"> {/* este fica sempre em último, se todos os outros falharem calha neste */}
-              <Home />
+              <RecentRides />
             </Route>
           </Switch>
         </Card>

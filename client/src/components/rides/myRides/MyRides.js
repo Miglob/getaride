@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import RideInformation from "./RideInformation";
+import MyRideInformation from "./MyRideInformation";
 
 
 class MyRides extends Component {
@@ -70,7 +70,7 @@ class MyRides extends Component {
         return (
             <div>
                 <h1 style={{ textAlign: "center" }}>As minhas boleias</h1>
-                {this.state.rides.map(element => <RideInformation ride={element} />)}
+                {this.state.rides.map(element => <MyRideInformation ride={element} />)}
             </div>
         );
     }

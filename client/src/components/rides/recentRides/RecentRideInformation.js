@@ -4,12 +4,13 @@ import moment from "moment";
 
 import Button from "react-bootstrap/Button";
 
-import monkey1 from '../../images/monkey1.gif';
-import MyRideDetails from "./MyRideDetails";
+import monkey1 from '../../../images/monkey1.gif';
+
+import RecentRideDetails from "./RecentRideDetails";
 
 
 
-class RideInformation extends Component {
+class RecentRideInformation extends Component {
 
 //Botão anular só  para aparecer se o utilizador for o dono da boleia
 
@@ -34,8 +35,7 @@ class RideInformation extends Component {
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <div>
                             {this.props.ride.id_user_driver ? ("Oferece: " + this.props.ride.num_seats + " lugares") : "Precisa de 1 lugar"}<br />
-                            <MyRideDetails ride={this.props.ride}/> <br />   
-                            <Button size="sm" variant="danger" style={{ marginTop: "0.5em" }}><b>Anular</b></Button>
+                            <RecentRideDetails ride={this.props.ride}/> <br />   
                         </div>
                     </div>
                 </div>
@@ -45,4 +45,4 @@ class RideInformation extends Component {
     }
 }
 
-export default RideInformation;
+export default RecentRideInformation;
