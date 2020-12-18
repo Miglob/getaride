@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import RecentRideInformation from "./RecentRideInformation";
 
+import { getRides } from "../../../actions/rideActions";
+import {connect} from "react-redux";
 
 
 class RecentRides extends Component {
@@ -70,10 +72,16 @@ class RecentRides extends Component {
         return (
             <div>
                 <h1 style={{ textAlign: "center" }}>Boleias recentes</h1>
+                <button onClick = {this.props.getRides}>TEST</button>
+                {this.props.rideState.rides.toString()}
                 {this.state.rides.map(element => <RecentRideInformation ride={element} />)}
             </div>
         );
     }
 }
 
-export default RecentRides;
+const mapStateToProps = (state) => ({//conectar o estado para o reducer
+    rideState: state.rideReducer
+});
+
+export default connect(mapStateToProps, { getRides })(RecentRides);//deixa aceder às actions, liga tudo!
