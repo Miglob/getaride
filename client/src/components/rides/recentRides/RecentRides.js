@@ -73,7 +73,7 @@ class RecentRides extends Component {
             <div>
                 <h1 style={{ textAlign: "center" }}>Boleias recentes</h1>
                 <button onClick = {this.props.getRides}>TEST</button>
-                {this.props.rideState.rides.toString()}
+                {JSON.stringify(this.props.rideState.rides)}
                 {this.state.rides.map(element => <RecentRideInformation ride={element} />)}
             </div>
         );

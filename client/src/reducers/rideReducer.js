@@ -11,7 +11,7 @@ export default function (state = initialState, action) {
         case GET_RIDES:
             return {
                 ...state,
-                rides: [action.payload, ...state.rides],//adicionar ao array rides
+                rides: action.payload,//adicionar ao array rides
                 loading: false
             };
 
