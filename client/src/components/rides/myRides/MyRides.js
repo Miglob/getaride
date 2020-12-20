@@ -5,10 +5,11 @@ import MyRideInformation from "./MyRideInformation";
 
 class MyRides extends Component {
 
+    //rankings ainda não existem
+    //lado do servidor popular um array de passageiros para as rides
+    //filtrar do lado do servidor as boleias que já espiraram
     state = {
-        //rankings ainda não existem
-        //lado servidor converter id_user_driver para boleanos
-        //lado do servidor popular um array de passageiros para as rides
+
         rides: [
             {
                 user_name: "António",

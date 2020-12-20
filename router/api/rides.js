@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
         let { departure_time, arrival_time, departure_location,
             arrival_location, hitch_initial_text, num_seats, id_user_driver } = req.body; // Vai obter os dados do body
 
-        let resultID = await database.insertHitchhike(departure_time, arrival_time, departure_location,
+        let [resultID] = await database.insertHitchhike(departure_time, arrival_time, departure_location,
             arrival_location, hitch_initial_text, num_seats, id_user_driver)[0];
 
         let newHitchHike = {
@@ -43,9 +43,9 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        let id = req.params; // Vai obter o :id do url
+        let {id} = req.params; // Vai obter o :id do url
 
-        let result = await database.getHitchhikeByID(id);
+        let [result] = await database.getHitchhikeByID(id);
         res.json(result);
     } catch (e) {
         res.status(500).send(e.toString());
@@ -54,14 +54,14 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        let id = req.params; // obter id do url
+        let {id} = req.params; // obter id do url
         let { departure_time, arrival_time, departure_location,
             arrival_location, hitch_initial_text, num_seats, id_user_driver } = req.body; // Vai obter os dados do body
 
-        let result = await database.updateHitchhikeByID(id, departure_time, arrival_time, departure_location,
+        let [result] = await database.updateHitchhikeByID(id, departure_time, arrival_time, departure_location,
             arrival_location, hitch_initial_text, num_seats, id_user_driver);
 
-        res.json(resul);
+        res.json(result);
 
     } catch (e) {
         res.status(500).send(e.toString());
@@ -70,13 +70,13 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        let id = req.params;
+        let {id} = req.params;
 
-        let result = await database.deleteHitchHikeByID(id);
+        let [result] = await database.deleteHitchHikeByID(id);
         res.json(result);
     } catch (e) {
         res.status(500).send(e.toString());
     }
 });
-
+//fazer hitchhikes por condutor ou passageiro
 module.exports = router;

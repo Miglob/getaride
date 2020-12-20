@@ -10,8 +10,9 @@ class RecentRides extends Component {
 
     state = {
         //rankings ainda não existem
-        //lado servidor converter id_user_driver para boleanos
         //lado do servidor popular um array de passageiros para as rides
+        //lado do servidor devolver as próximas boleias
+        //não interessa filtrar se o condutor é passageiro ou nao é etc
         rides: [
             {
                 user_name: "António",
@@ -24,6 +25,7 @@ class RecentRides extends Component {
                 id_user_driver: true,
                 passengers: [
                     {
+                        id_passengers: 1 ,
                         user_name: "Maria Albertina",
                         state: "Cancelada"
                     }
@@ -40,6 +42,7 @@ class RecentRides extends Component {
                 id_user_driver: true,
                 passengers: [
                     {
+                        id_passengers: 2 ,
                         user_name: "Margarida",
                         state: "Pendente"
                     }
@@ -56,10 +59,12 @@ class RecentRides extends Component {
                 id_user_driver: true,
                 passengers: [
                     {
+                        id_passengers: 3 ,
                         user_name: "Ricardo Carmo",
                         state: "Confirmada"
                     },
                     {
+                        id_passengers: 4 ,
                         user_name: "Antonio",
                         state: "Confirmada"
                     },

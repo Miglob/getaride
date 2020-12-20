@@ -68,6 +68,34 @@ module.exports = (connection) => {
         deleteHitchHikeByID: (id) => {
             let query = `DELETE FROM hitchhikes WHERE id_hitchhikes = ?`;
             return connection.execute(query, [id]);
+        },
+        getAllPassengers: () => {
+            let query = `SELECT * FROM passengers`;
+            return connection.query(query);
+        },
+        getPassengersByHitchhikeId: (idHitchhike) => {
+            let query = `SELECT * FROM passengers WHERE id_hitchhike = ?`;
+            return connection.execute(query, [idHitchhike]);
+        },
+        getHitchhikesByUserId: (idUser) => {
+            let query = `SELECT h.id_hitchhikes,
+            h.departure_time,
+            h.arrival_time,
+            h.departure_location,
+            h.arrival_location,
+            h.hitch_initial_text,
+            h.num_seats,
+            h.id_user_driver,
+            u.user_name 'driver',
+            p.id_passengers,
+            p.user_name 'passenger',
+            p.state
+     FROM hitchhikes h
+     INNER JOIN (SELECT * FROM passengers p
+                INNER JOIN users u ON u.id_users = p.id_user) p ON p.id_hitchhike = h.id_hitchhikes
+     INNER JOIN users u ON h.id_user_driver = u.id_users
+     WHERE h.id_user_driver = ? OR p.id_user = ?`;
+            return connection.execute(query, [idUser, idUser]);
         }
     };
 }

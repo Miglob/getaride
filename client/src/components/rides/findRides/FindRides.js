@@ -16,6 +16,9 @@ import FindRideInformation from "./FindRideInformation";
 class FindRides extends Component {
 
 
+        //rankings ainda não existem
+        //falta botão para confirmar o user(passageiro) na boleia nos detalhes
+        //servidor filtrar as boleias no qual o utilizador faz parte
 
     state = {
 
@@ -26,10 +29,6 @@ class FindRides extends Component {
 
         searchResults: [],
 
-        //rankings ainda não existem
-        //lado servidor converter id_user_driver para boleanos????
-        //falta botão para confirmar o user(passageiro) na boleia nos detalhes
-   
 
 
         rides: [
