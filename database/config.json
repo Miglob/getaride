@@ -3,9 +3,7 @@
     "user": "n4DSJ0u50T",
     "password": "bhcGzC6fjF",
     "database": "n4DSJ0u50T",
-    "pool": {
-        "max": 100,
-        "min": 0,
-        "idleTimeoutMillis": 5000
-    }
+    "waitForConnections": true,
+    "connectionLimit": 10,
+    "queueLimit": 0
 }

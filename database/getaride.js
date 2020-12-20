@@ -1,11 +1,11 @@
-let queryDb = (connection, query) => {
-    return new Promise((resolve, reject) => {//aceita ou rejeita. 
-        connection.query(query, (error, result) => {//callback(executada aqui dentro)
-            if (error) reject(error);
-            else resolve(result);
-        })
-    });
-}
+// let queryDb = (connection, query) => {
+//     return new Promise((resolve, reject) => {//aceita ou rejeita. 
+//         connection.query(query, (error, result) => {//callback(executada aqui dentro)
+//             if (error) reject(error);
+//             else resolve(result);
+//         })
+//     });
+// }
 module.exports = (connection) => {
     return {
         getAllHitchhikes: () => {//o atributo(propriedade) é uma função
@@ -19,7 +19,8 @@ module.exports = (connection) => {
             u.user_name
             from hitchhikes h
             inner join users u on u.id_users = h.id_user_driver;`;
-            return queryDb(connection, query);
+            // return queryDb(connection, query);
+            return connection.query(query);
         }
 
     };

@@ -6,12 +6,12 @@ let database = require("../../database");//importar bd
 // @desc    Get All Rides
 // @access  Public
 router.get("/", async (req, res) => {//comunicação com a bd, para await o async
-    try{//todos os hitch em formato json
-        
-        let  result = await database.getAllHitchhikes();
-        res.json(result); 
+    try {//todos os hitch em formato json
+
+        let [result] = await database.getAllHitchhikes();
+        res.json(result);
     }
-    catch(error){
+    catch (error) {
         res.status(500).send(error);
     }
 });
