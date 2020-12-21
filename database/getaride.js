@@ -96,6 +96,10 @@ module.exports = (connection) => {
      INNER JOIN users u ON h.id_user_driver = u.id_users
      WHERE h.id_user_driver = ? OR p.id_user = ?`;
             return connection.execute(query, [idUser, idUser]);
+        },
+        checkIfUserExists: (email) =>{
+            let query=`select count (*) as total from users where email = ?;`
+            return connection.execute(query, [email]);
         }
     };
 }
