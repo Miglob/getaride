@@ -16,7 +16,8 @@ let database = require("../../database");
 // @desc    Register new user
 // @access  Public
 router.post("/signIn", encrypt, async (req, res) => {
-  const { user_name, email, user_password } = req.body;
+  const { user_name, email } = req.body;
+  const { user_password } = req;
 
   //Simple validation
   if (!user_name || !email || !user_password) {
@@ -25,14 +26,19 @@ router.post("/signIn", encrypt, async (req, res) => {
 
   // Check for existing user
   //verificar se utilizador existe
-  let [result] = await database.checkIfUserExists(email);
+  // let [result] = await database.checkIfUserExists(email);
 
-  if(result[0].total > 0){
-    return res.status(500).send("Email já em uso!");
-  }
-  console.log(req.user_password);
-  return res.json(result);
+  // if(result[0].total > 0){
+  //   return res.status(500).send("Email já em uso!");
+  // }
 
+   let [result2] = await database.createUser(user_name, user_password, email);
+
+   console.log(result2);
+
+   return res.json(result2);
 });
+
+
 
 module.exports = router; 

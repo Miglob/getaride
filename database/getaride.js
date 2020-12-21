@@ -97,9 +97,14 @@ module.exports = (connection) => {
      WHERE h.id_user_driver = ? OR p.id_user = ?`;
             return connection.execute(query, [idUser, idUser]);
         },
-        checkIfUserExists: (email) =>{
-            let query=`select count (*) as total from users where email = ?;`
+        checkIfUserExists: (email) => {
+            let query = `select count (*) as total from users where email = ?;`
             return connection.execute(query, [email]);
+        },
+        createUser: (user_name, user_password, email) => {
+            let query = `insert into users (user_name, user_password, email) values (?,?,?)`;
+
+            return connection.execute(query, [user_name, user_password, email]);
         }
     };
 }
