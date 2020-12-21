@@ -98,7 +98,8 @@ module.exports = (connection) => {
             return connection.execute(query, [idUser, idUser]);
         },
         checkIfUserExists: (email) => {
-            let query = `select count (*) as total from users where email = ?;`
+            //let query = `select count (*) as total from users where email = ?;`
+            let query = `select id_users, user_name, user_password, email from users where email = ?;`
             return connection.execute(query, [email]);
         },
         createUser: (user_name, user_password, email) => {

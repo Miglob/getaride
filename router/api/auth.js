@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const encrypt = require("../../middleware/encrypt");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 let database = require("../../database");
 
@@ -12,10 +14,10 @@ let database = require("../../database");
 }
 */
 
-// @route   POST api/auth/signIn
+// @route   POST api/auth/signUp
 // @desc    Register new user
 // @access  Public
-router.post("/signIn", encrypt, async (req, res) => {
+router.post("/signUp", encrypt, async (req, res) => {
   const { user_name, email, user_password } = req.body;
 
   //Simple validation
@@ -26,9 +28,12 @@ router.post("/signIn", encrypt, async (req, res) => {
   //Check for existing user
   //verificar se utilizador existe
   try {
+
     let [result] = await database.checkIfUserExists(email);
 
-    if (result[0].total > 0) {
+    console.log(result);
+
+    if (Array.isArray(result) && result.length) {
       return res.status(500).send("Email já em uso!");
     }
 
@@ -45,5 +50,59 @@ router.post("/signIn", encrypt, async (req, res) => {
 
 });
 
+// @route   POST api/auth/signIn
+// @desc    Authenticate user
+// @access  Public
+router.post("/signIn", async (req, res) => {
+
+  const { email, user_password } = req.body;
+
+  //Simple validation
+  if (!email || !user_password) {
+    return res.status(500).send("Credenciais inválidas");
+  }
+
+  try {
+    let [result] = await database.checkIfUserExists(email);
+
+    if (Array.isArray(result) && result.length) {
+      authenticate(req, res, result[0].id_users, result[0].user_name, user_password, result[0].user_password)
+    }else{
+      return res.status(500).send("Utilizador não existente!");
+    }
+
+  } catch (e) {
+    res.status(500).send(e.toString());
+
+  }
+});
+
+let authenticate = (req, res, user_id, user_name, user_password, bd_password) => {
+
+  // Validate password
+  bcrypt.compare(user_password, bd_password) // plain text, hased text
+    .then(isMatch => {
+      if (!isMatch) {
+        return res.status(500).send({ msg: serverMessages.invalidCredentials() });
+      }
+
+      jwt.sign(//se calhar não se utiliza os tokens
+        { id: user_id },
+        "Miguel_IPS",
+        { expiresIn: 3600 }, // token expire time
+        (err, token) => {
+          if (err) throw err; // ver se é preciso enviar um erro para o cliente
+
+          res.json({
+            token: token,
+            user: {
+              id_users: user_id,
+              user_name: user_name
+            }
+          });
+        }
+      );
+    });
+};
 
 module.exports = router; 
