@@ -24,21 +24,27 @@ router.post("/signIn", encrypt, async (req, res) => {
     return res.status(400).send("Credenciais inválidas");
   }
 
-  // Check for existing user
+  //Check for existing user
   //verificar se utilizador existe
-  // let [result] = await database.checkIfUserExists(email);
+  try {
+    let [result] = await database.checkIfUserExists(email);
 
-  // if(result[0].total > 0){
-  //   return res.status(500).send("Email já em uso!");
-  // }
+    if (result[0].total > 0) {
+      return res.status(500).send("Email já em uso!");
+    }
 
-   let [result2] = await database.createUser(user_name, user_password, email);
+    let [resultId] = await database.createUser(user_name, user_password, email);
 
-   console.log(result2);
+    if (!!resultId && resultId.insertId > 0) {
+      return res.send(`Utilizador inserido com sucesso e com o id: ${resultId.insertId}`);
+    }
 
-   return res.json(result2);
+  } catch (e) {
+    res.status(500).send(e.toString());
+
+  }
+
 });
-
 
 
 module.exports = router; 

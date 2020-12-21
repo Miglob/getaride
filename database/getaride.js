@@ -102,7 +102,7 @@ module.exports = (connection) => {
             return connection.execute(query, [email]);
         },
         createUser: (user_name, user_password, email) => {
-            let query = `insert into users (user_name, user_password, email) values (?,?,?)`;
+            let query = `INSERT INTO users (user_name, user_password, email) VALUES (?,?,?);`;
 
             return connection.execute(query, [user_name, user_password, email]);
         }
