@@ -16,8 +16,7 @@ let database = require("../../database");
 // @desc    Register new user
 // @access  Public
 router.post("/signIn", encrypt, async (req, res) => {
-  const { user_name, email } = req.body;
-  const { user_password } = req;
+  const { user_name, email, user_password } = req.body;
 
   //Simple validation
   if (!user_name || !email || !user_password) {

@@ -11,7 +11,7 @@ function encrypt(req, res, next) {
             bcrypt.hash(user_password, salt, (err, hash) => {
                 if (err) return res.status(500).send(err);
 
-               req.user_password = hash;
+               req.body.user_password = hash;
 
                 next();
             });
