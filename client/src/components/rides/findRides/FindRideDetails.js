@@ -44,7 +44,7 @@ class FindRideDetails extends Component {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>Detalhes</Modal.Title>
-                        <Button onClick={() => alert("todo")} style = {{marginLeft : "60%" }}>Associar à boleia</Button>
+                        <Button onClick={() => alert("todo")} style = {{marginLeft : "65%" }}>Associar à boleia</Button>
                     </Modal.Header>
                     <Modal.Body>
                         <p>Tem como boleia confirmada:</p>
@@ -82,7 +82,7 @@ class FindRideDetails extends Component {
                                  mensagens
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary">Criar mensagem</Button>
+                        <Button variant="primary" style={{marginRight: "2em"}}>Criar mensagem</Button>
                     </Modal.Footer>
                 </Modal>
             </>

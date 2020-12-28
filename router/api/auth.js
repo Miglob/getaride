@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const encrypt = require("../../middleware/encrypt");
 const bcrypt = require("bcryptjs");
+const config = require("config");
 const jwt = require("jsonwebtoken");
+const auth = require("../../middleware/auth");
 
 let database = require("../../database");
 
@@ -67,9 +69,31 @@ router.post("/signIn", async (req, res) => {
 
     if (Array.isArray(result) && result.length) {
       authenticate(req, res, result[0].id_users, result[0].user_name, user_password, result[0].user_password)
-    }else{
+    } else {
       return res.status(500).send("Utilizador não existente!");
     }
+
+  } catch (e) {
+    res.status(500).send(e.toString());
+
+  }
+});
+
+// @route   GET api/auth/user
+// @desc    Get user data
+// @access  Private
+router.get("/user", auth, async (req, res) => {
+
+  try {
+
+    let [result] = await database.findUserById(req.user.id);
+
+    return res.json({
+      user: {
+        id_users: req.user.id,
+        user_name: result[0].user_name
+      }
+    });
 
   } catch (e) {
     res.status(500).send(e.toString());
@@ -83,12 +107,12 @@ let authenticate = (req, res, user_id, user_name, user_password, bd_password) =>
   bcrypt.compare(user_password, bd_password) // plain text, hased text
     .then(isMatch => {
       if (!isMatch) {
-        return res.status(500).send({ msg: serverMessages.invalidCredentials() });
+        return res.status(500).send("Credenciais inválidas");
       }
 
       jwt.sign(//se calhar não se utiliza os tokens
         { id: user_id },
-        "Miguel_IPS",
+        config.get("jwtSecret"),
         { expiresIn: 3600 }, // token expire time
         (err, token) => {
           if (err) throw err; // ver se é preciso enviar um erro para o cliente

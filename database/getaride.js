@@ -106,6 +106,11 @@ module.exports = (connection) => {
             let query = `INSERT INTO users (user_name, user_password, email) VALUES (?,?,?);`;
 
             return connection.execute(query, [user_name, user_password, email]);
+        },
+        findUserById: (id_users) => {
+            let query = `SELECT user_name FROM users WHERE id_users = ?`
+
+            return connection.execute(query, [id_users]);
         }
     };
 }
