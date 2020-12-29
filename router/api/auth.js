@@ -46,7 +46,7 @@ router.post("/signUp", encrypt, async (req, res) => {
     }
 
   } catch (e) {
-    res.status(500).send(e.toString());
+    return res.status(500).send(e.toString());
 
   }
 
@@ -60,21 +60,24 @@ router.post("/signIn", async (req, res) => {
   const { email, user_password } = req.body;
 
   //Simple validation
+
   if (!email || !user_password) {
     return res.status(500).send("Credenciais inválidas");
   }
 
   try {
     let [result] = await database.checkIfUserExists(email);
-
+console.log(result);
     if (Array.isArray(result) && result.length) {
       authenticate(req, res, result[0].id_users, result[0].user_name, user_password, result[0].user_password)
     } else {
+
       return res.status(500).send("Utilizador não existente!");
     }
 
   } catch (e) {
-    res.status(500).send(e.toString());
+    console.log(e);
+    return res.status(500).send(e.toString());
 
   }
 });
@@ -96,17 +99,19 @@ router.get("/user", auth, async (req, res) => {
     });
 
   } catch (e) {
-    res.status(500).send(e.toString());
+    return res.status(500).send(e.toString());
 
   }
 });
 
 let authenticate = (req, res, user_id, user_name, user_password, bd_password) => {
-
+console.log("bosta");
   // Validate password
+
   bcrypt.compare(user_password, bd_password) // plain text, hased text
     .then(isMatch => {
       if (!isMatch) {
+        //return res.status(500).json({msg:"Credenciais inválidas"});
         return res.status(500).send("Credenciais inválidas");
       }
 

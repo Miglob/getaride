@@ -1,14 +1,18 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+
+import LoginModal from "../auth/LoginModal";
+import Logout from "../auth/Logout";
+import RegisterModal from "../auth/RegisterModal";
 
 import queen from '../../images/queen1.gif';
-import ipsLogo from '../../images/ipsLogo.png';
+
 
 class NavTopBar extends Component {
 
@@ -41,15 +45,11 @@ class NavTopBar extends Component {
                         </NavDropdown>
                         <Nav.Link href="/ranking">Ranking</Nav.Link>
                     </Nav>
-                    <Button variant="outline-primary"
-                        style={{ marginRight: "2.5em", color: "white" }}>Sign up</Button>{' '}
-                    <OverlayTrigger key="bottom"
-                        placement="bottom"
-                        overlay={<Tooltip id={`tooltip-bottom`}>eu ainda não funciono :D</Tooltip>}>
-                        <Button variant="secondary">Login</Button>
-                    </OverlayTrigger>
-                    <Button variant="outline-primary"
-                        style={{ marginLeft: "2.5em", color: "white" }}>Sair</Button>{' '}
+                    {this.props.isAuthenticated ? "" : <RegisterModal/>}
+                    {this.props.isAuthenticated ? "" : <LoginModal/>}
+                    {this.props.isAuthenticated ? `Olá ${this.props.user.user_name}` : ""}
+                    {this.props.isAuthenticated ? <Logout/> : "" }
+                    
 
                 </Navbar.Collapse>
             </Navbar>
@@ -57,4 +57,10 @@ class NavTopBar extends Component {
     }
 }
 
-export default NavTopBar;
+const mapStateToProps = state => ({
+    isAuthenticated: state.authReducer.isAuthenticated,
+    user: state.authReducer.user,
+})
+
+
+export default connect(mapStateToProps, { })(NavTopBar);

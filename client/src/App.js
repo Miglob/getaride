@@ -20,7 +20,6 @@ import MyRides from "./components/rides/myRides/MyRides"
 import CreateRide from "./components/rides/CreateRide"
 import FindRides from "./components/rides/findRides/FindRides"
 import Ranking from "./components/Ranking"
-import { Component } from 'react';
 
 class App extends Component {
 
@@ -57,7 +56,6 @@ class App extends Component {
                 </Route>
               </Switch>
             </Card>
-
           </Router >
         </div>
       </Provider>

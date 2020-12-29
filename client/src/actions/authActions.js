@@ -19,7 +19,7 @@ export const loadUser = () => (dispatch, getState) => {
 }
 
 // Register user
-export const register = ({ name, email, password }) => dispatch => {
+export const register = ({ user_name, email, user_password }) => dispatch => {
     // Headers
     const config = {
         headers: {
@@ -28,7 +28,7 @@ export const register = ({ name, email, password }) => dispatch => {
     }
 
     // Request body
-    const body = JSON.stringify({ name, email, password });
+    const body = JSON.stringify({ user_name, email, user_password });
 
     axios.post("/api/auth/signUp", body, config)
         .then(res => {
@@ -44,7 +44,7 @@ export const register = ({ name, email, password }) => dispatch => {
 }
 
 // Login user
-export const login = ({ email, password }) => dispatch => {
+export const login = ({ email, user_password }) => dispatch => {
     // Headers
     const config = {
         headers: {
@@ -53,7 +53,7 @@ export const login = ({ email, password }) => dispatch => {
     }
 
     // Request body
-    const body = JSON.stringify({ email, password });
+    const body = JSON.stringify({ email, user_password });
 
     axios.post("/api/auth/signIn", body, config)
         .then(res => {
@@ -63,6 +63,7 @@ export const login = ({ email, password }) => dispatch => {
             })
         })
         .catch(err => {
+            console.log(err.response.data);
             dispatch({
                 type: LOGIN_FAIL
             });
