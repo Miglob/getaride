@@ -24,11 +24,10 @@ module.exports = (connection) => {
         },
         insertHitchhike: (departureTime, arrivalTime, departureLocation, arrivalLocation,
             hitchhikeInitialText, numSeats, idUserDriver) => {
-            let query = `INSERT INTO hitchhikes(departure_time,arrival_time,departure_location,arrival_location
-                    hitch_initial_text, num_seats, id_user_driver)
-                    VALUES (?,?,?,?,?,?,?)
-                    
-                    SELECT LAST_INSERT_ID();`;
+            let query = `
+            INSERT INTO hitchhikes(departure_time,arrival_time,departure_location,arrival_location,
+                hitch_initial_text, num_seats, id_user_driver)
+                VALUES (?,?,?,?,?,?,?); `;
 
             return connection.execute(query, [
                 departureTime,
@@ -111,6 +110,28 @@ module.exports = (connection) => {
             let query = `SELECT user_name FROM users WHERE id_users = ?`
 
             return connection.execute(query, [id_users]);
+        },
+        getRecentCreatedRides: () =>{
+            let query = `select h.id_hitchhikes,
+            h.departure_time, 
+            h.arrival_time,
+            h.departure_location,
+            h.arrival_location,
+            h.hitch_initial_text,
+            h.num_seats,
+            u.user_name,
+            GROUP_CONCAT(pa.id_passengers, ',', pa.user_name, ',', pa.state
+                        SEPARATOR '|') 'passengers'
+            from hitchhikes h
+            inner join users u on u.id_users = h.id_user_driver
+            left join (SELECT p.id_passengers, u.user_name, p.state, p.id_hitchhike
+                        FROM passengers p
+                       INNER JOIN users u ON u.id_users = p.id_user) pa on pa.id_hitchhike = h.id_hitchhikes
+            GROUP BY h.id_hitchhikes
+            order by h.id_hitchhikes desc 
+            limit 10;`;
+
+            return connection.query(query);
         }
     };
 }

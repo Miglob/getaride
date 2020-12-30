@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import RecentRideInformation from "./RecentRideInformation";
 
-import { getRides } from "../../../actions/rideActions";
+import { getRecentRides } from "../../../actions/rideActions";
 import {connect} from "react-redux";
 
 
@@ -73,13 +73,16 @@ class RecentRides extends Component {
             }
         ],
     }
+
+    componentDidMount(){
+        this.props.getRecentRides();
+    }
+
     render() {
         return (
             <div>
                 <h1 style={{ textAlign: "center" }}>Boleias recentes</h1>
-                <button onClick = {this.props.getRides}>TEST</button>
-                {JSON.stringify(this.props.rideState.rides)}
-                {this.state.rides.map(element => <RecentRideInformation ride={element} />)}
+                {this.props.rideState.recentRides.map(element => <RecentRideInformation ride={element} />)}
             </div>
         );
     }
@@ -89,4 +92,4 @@ const mapStateToProps = (state) => ({//conectar o estado para o reducer
     rideState: state.rideReducer
 });
 
-export default connect(mapStateToProps, { getRides })(RecentRides);//deixa aceder às actions, liga tudo!
+export default connect(mapStateToProps, { getRecentRides })(RecentRides);//deixa aceder às actions, liga tudo!

@@ -30,10 +30,10 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
+        <div className="App" style={{ backgroundColor: "#eee" }}>
           <Router>
             <NavTopBar />
-            <Card style={{ width: "80%", margin: "2em auto auto", padding: "2em" }}>
+            <Card style={{ width: "80%", margin: "2em auto auto", padding: "2em"}}>
               {/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}
               <Switch>
                 <Route path="/stuff">

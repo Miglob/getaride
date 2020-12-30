@@ -22,7 +22,7 @@ class NavTopBar extends Component {
 
     render() {
         return (
-            <Navbar /*bg="light" */expand="lg" style={{ minHeight: "10vh", backgroundColor: "#245c8d" }}>
+            <Navbar /*bg="light" */ expand="lg" style={{ minHeight: "10vh", backgroundColor: "#245c8d" }}>
                 <Navbar.Brand href="/recentRides">
                     <img
                         alt=""
@@ -38,18 +38,20 @@ class NavTopBar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link href="/recentRides" >Boleias recentes</Nav.Link>
                         <Nav.Link href="/stuff">Stuff</Nav.Link>
-                        <NavDropdown title="Boleias">
-                            <NavDropdown.Item href="/myRides">As tuas boleias</NavDropdown.Item>
-                            <NavDropdown.Item href="/createRide">Criar Boleia</NavDropdown.Item>
-                            <NavDropdown.Item href="/findRides">Encontrar Boleia</NavDropdown.Item>
-                        </NavDropdown>
+                        {this.props.isAuthenticated ?
+                            <NavDropdown title="Boleias">
+                                <NavDropdown.Item href="/myRides">As tuas boleias</NavDropdown.Item>
+                                <NavDropdown.Item href="/createRide">Criar Boleia</NavDropdown.Item>
+                                <NavDropdown.Item href="/findRides">Encontrar Boleia</NavDropdown.Item>
+                            </NavDropdown> : ""
+                        }
                         <Nav.Link href="/ranking">Ranking</Nav.Link>
                     </Nav>
-                    {this.props.isAuthenticated ? "" : <RegisterModal/>}
-                    {this.props.isAuthenticated ? "" : <LoginModal/>}
+                    {this.props.isAuthenticated ? "" : <RegisterModal />}
+                    {this.props.isAuthenticated ? "" : <LoginModal />}
                     {this.props.isAuthenticated ? `Olá ${this.props.user.user_name}` : ""}
-                    {this.props.isAuthenticated ? <Logout/> : "" }
-                    
+                    {this.props.isAuthenticated ? <Logout /> : ""}
+
 
                 </Navbar.Collapse>
             </Navbar>
@@ -63,4 +65,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, { })(NavTopBar);
+export default connect(mapStateToProps, {})(NavTopBar);

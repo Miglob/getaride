@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
@@ -77,8 +75,7 @@ class RecentRideDetails extends Component {
                         </div>
 
                         <p style={{ marginTop: "2em" }}>Informações adicionais: </p>
-
-                                 mensagens
+                            {this.props.ride.hitch_initial_text}
                     </Modal.Body>
                 </Modal>
             </>

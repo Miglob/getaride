@@ -1,8 +1,9 @@
-import { GET_RIDES, RIDES_LOADING, RIDES_ERROR } from "../actions/types";
+import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, GET_RECENT_RIDES } from "../actions/types";
 
 const initialState = {
     rides: [],
-    loading: false
+    loading: false,
+    recentRides: []
 }
 
 export default function (state = initialState, action) {
@@ -12,6 +13,13 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 rides: action.payload,//adicionar ao array rides
+                loading: false
+            };
+
+        case GET_RECENT_RIDES:
+            return {
+                ...state,
+                recentRides: action.payload,//adicionar ao array rides
                 loading: false
             };
 
