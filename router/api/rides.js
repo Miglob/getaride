@@ -40,13 +40,30 @@ router.get('/recentRides', async (req, res) => {
 // @desc    Get All Rides
 // @access  Public
 router.get("/", async (req, res) => {//comunicação com a bd, para await o async
-    try {//todos os hitch em formato json
-
+    try {
         let [result] = await database.getAllHitchhikes();
+
+        result = result.map(e => {
+            if (e.passengers) {
+                let passengers = e.passengers.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id = arr[0];
+                    let name = arr[1];
+                    let state = arr[2];
+
+                    return {
+                        id_passengers: id,
+                        user_name: name,
+                        state
+                    };
+                });
+                e.passengers = passengers;
+            }
+            return e;
+        });
         res.json(result);
-    }
-    catch (error) {
-        res.status(500).send(error);
+    } catch (e) {
+        res.status(500).send(e.toString());
     }
 });
 

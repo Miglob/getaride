@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import moment from "moment";
+
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
@@ -58,8 +60,8 @@ class MyRideDetails extends Component {
                             <Col> Destino: {this.props.ride.arrival_location}</Col>
                         </Row>
                         <Row>
-                            <Col>Hora partida: {this.props.ride.departure_time}</Col>
-                            <Col>Hora chegada: {this.props.ride.arrival_time}</Col>
+                            <Col>Hora partida: {moment(this.props.ride.departure_time).format("DD-MM-yyyy HH:mm")}</Col>
+                            <Col>Hora chegada: {moment(this.props.ride.arrival_time).format("DD-MM-yyyy HH:mm")}</Col>
                         </Row>
 
                         <p style={{ marginTop: "2em" }}>Passageiros: </p>

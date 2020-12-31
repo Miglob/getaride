@@ -9,6 +9,7 @@ export const getRides = () => dispatch => {
             payload: res.data
         }))
         .catch(err => {
+            console.log(err.response.data);
             dispatch({
                 type: RIDES_ERROR
             });

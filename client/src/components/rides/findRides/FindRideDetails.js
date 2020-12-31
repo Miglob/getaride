@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import moment from "moment";
+
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
@@ -44,7 +46,7 @@ class FindRideDetails extends Component {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>Detalhes</Modal.Title>
-                        <Button onClick={() => alert("todo")} style = {{marginLeft : "65%" }}>Associar à boleia</Button>
+                        <Button onClick={() => alert("todo")} style={{ marginLeft: "65%" }}>Associar à boleia</Button>
                     </Modal.Header>
                     <Modal.Body>
                         <p>Tem como boleia confirmada:</p>
@@ -59,8 +61,8 @@ class FindRideDetails extends Component {
                             <Col> Destino: {this.props.ride.arrival_location}</Col>
                         </Row>
                         <Row>
-                            <Col>Hora partida: {this.props.ride.departure_time}</Col>
-                            <Col>Hora chegada: {this.props.ride.arrival_time}</Col>
+                            <Col>Hora partida: {moment(this.props.ride.departure_time).format("DD-MM-yyyy HH:mm")}</Col>
+                            <Col>Hora chegada: {moment(this.props.ride.arrival_time).format("DD-MM-yyyy HH:mm")}</Col>
                         </Row>
 
                         <p style={{ marginTop: "2em" }}>Passageiros: </p>
@@ -79,10 +81,10 @@ class FindRideDetails extends Component {
 
                         <p style={{ marginTop: "2em" }}>Informações adicionais: </p>
 
-                                 mensagens
+                        {this.props.ride.hitch_initial_text}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary" style={{marginRight: "2em"}}>Criar mensagem</Button>
+                        <Button variant="primary" style={{ marginRight: "2em" }}>Criar mensagem</Button>
                     </Modal.Footer>
                 </Modal>
             </>

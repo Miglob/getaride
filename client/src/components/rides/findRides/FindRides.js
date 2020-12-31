@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import moment from "moment";
+import { connect } from "react-redux";
+
+import { getRides } from "../../../actions/rideActions";
 
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,9 +17,9 @@ import FindRideInformation from "./FindRideInformation";
 class FindRides extends Component {
 
 
-        //rankings ainda não existem
-        //falta botão para confirmar o user(passageiro) na boleia nos detalhes
-        //servidor filtrar as boleias no qual o utilizador faz parte
+    //rankings ainda não existem
+    //falta botão para confirmar o user(passageiro) na boleia nos detalhes
+    //servidor filtrar as boleias no qual o utilizador faz parte
 
     state = {
 
@@ -28,70 +29,19 @@ class FindRides extends Component {
         searchDate: "",
 
         searchResults: [],
+    }
 
-
-
-        rides: [
-            {
-                user_name: "António",
-                ranking: 3,
-                departure_time: "2020-11-25 08:00:00",
-                arrival_time: "2020-11-25 08:15:00",
-                departure_location: "Setúbal",
-                arrival_location: "IPS",
-                num_seats: 3,
-                id_user_driver: true,
-                passengers: [
-                    {
-                        user_name: "Maria Albertina",
-                        state: "Cancelada"
-                    }
-                ]
-            },
-            {
-                user_name: "Mário",
-                ranking: 2,
-                departure_time: "2020-11-22 12:10:00",
-                arrival_time: "2020-11-22 12:25:00",
-                departure_location: "Paio Pires",
-                arrival_location: "IPS",
-                num_seats: 2,
-                id_user_driver: true,
-                passengers: [
-                    {
-                        user_name: "Margarida",
-                        state: "Pendente"
-                    }
-                ]
-            },
-            {
-                user_name: "Ricardo",
-                ranking: 2,
-                departure_time: "2020-11-22 12:10:00",
-                arrival_time: "2020-11-22 12:25:00",
-                departure_location: "Paio Pires",
-                arrival_location: "IPS",
-                num_seats: 2,
-                id_user_driver: true,
-                passengers: [
-                    {
-                        user_name: "Ricardo Carmo",
-                        state: "Confirmada"
-                    },
-                    {
-                        user_name: "Antonio",
-                        state: "Confirmada"
-                    },
-
-                ]
-            }
-        ],
+    componentWillMount() {
+        this.props.getRides();
     }
 
     //life cicle methods - é chamado no final
-    componentDidMount() {
-        this.search();
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.rideState.rides !== this.props.rideState.rides) {
+            this.search();
+        }
     }
+
 
     normalize = (string) => {
         return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -102,10 +52,9 @@ class FindRides extends Component {
         var arr = [];
 
         if (!this.state.searchName && !this.state.searchDeparture && !this.state.searchArrival && !this.state.searchDate) {
-            arr = this.state.rides;
-
+            arr = this.props.rideState.rides;
         } else {
-            this.state.rides.forEach(element => {
+            this.props.rideState.rides.forEach(element => {
 
                 if (
                     (!this.state.searchName || (!!this.state.searchName && this.normalize(element.user_name).includes(this.normalize(this.state.searchName)))) &&
@@ -185,4 +134,8 @@ class FindRides extends Component {
     }
 }
 
-export default FindRides;
+const mapStateToProps = (state) => ({//conectar o estado para o reducer
+    rideState: state.rideReducer
+});
+
+export default connect(mapStateToProps, { getRides })(FindRides);

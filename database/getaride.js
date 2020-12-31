@@ -16,9 +16,15 @@ module.exports = (connection) => {
             h.arrival_location,
             h.hitch_initial_text,
             h.num_seats,
-            u.user_name
+            u.user_name,
+            GROUP_CONCAT(pa.id_passengers, ',', pa.user_name, ',', pa.state
+                        SEPARATOR '|') 'passengers'
             from hitchhikes h
-            inner join users u on u.id_users = h.id_user_driver;`;
+            inner join users u on u.id_users = h.id_user_driver
+            left join (SELECT p.id_passengers, u.user_name, p.state, p.id_hitchhike
+                        FROM passengers p
+                       INNER JOIN users u ON u.id_users = p.id_user) pa on pa.id_hitchhike = h.id_hitchhikes
+            GROUP BY h.id_hitchhikes;`;
             // return queryDb(connection, query);
             return connection.query(query);
         },
