@@ -1,4 +1,4 @@
-import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, ADD_RIDE, GET_RECENT_RIDES } from "./types";
+import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, ADD_RIDE, GET_RECENT_RIDES, GET_MY_RIDES } from "./types";
 import axios from "axios";
 
 export const getRides = () => dispatch => {
@@ -10,6 +10,22 @@ export const getRides = () => dispatch => {
         }))
         .catch(err => {
             console.log(err.response.data);
+            dispatch({
+                type: RIDES_ERROR
+            });
+        });
+}
+
+export const getMyRides = (id_users) => dispatch => {
+    dispatch(setRidesLoading());//chama função setRidesLoading
+    axios.get(`/api/rides/myRides/${id_users}`)//pedido - ver directoria: localhost???
+        .then(res => {
+            dispatch({//vai para o reducer, switch. Resposta ao servidor
+                type: GET_MY_RIDES,
+                payload: res.data
+            });
+        })
+        .catch(err => {
             dispatch({
                 type: RIDES_ERROR
             });

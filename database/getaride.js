@@ -17,13 +17,19 @@ module.exports = (connection) => {
             h.hitch_initial_text,
             h.num_seats,
             u.user_name,
-            GROUP_CONCAT(pa.id_passengers, ',', pa.user_name, ',', pa.state
-                        SEPARATOR '|') 'passengers'
+            u.id_users,
+            GROUP_CONCAT(distinct pa.id_passengers, ',', pa.user_name, ',', pa.state
+                        SEPARATOR '|') 'passengers',
+            GROUP_CONCAT(distinct m.id_messages, ',', m.user_name, ',', m.mns_date, ',', m.mns_text
+                        SEPARATOR '|') 'messages'
             from hitchhikes h
             inner join users u on u.id_users = h.id_user_driver
             left join (SELECT p.id_passengers, u.user_name, p.state, p.id_hitchhike
                         FROM passengers p
                        INNER JOIN users u ON u.id_users = p.id_user) pa on pa.id_hitchhike = h.id_hitchhikes
+            left join (SELECT m.id_hitchhike, u.user_name, m.mns_date, m.mns_text, m.id_messages
+                       FROM messages m
+                      INNER JOIN users u on m.id_user = u.id_users) m on m.id_hitchhike = h.id_hitchhikes
             GROUP BY h.id_hitchhikes;`;
             // return queryDb(connection, query);
             return connection.query(query);
@@ -73,6 +79,16 @@ module.exports = (connection) => {
         deleteHitchHikeByID: (id) => {
             let query = `DELETE FROM hitchhikes WHERE id_hitchhikes = ?`;
             return connection.execute(query, [id]);
+        },
+        deleteMessagesByHitchhicke : (id_hitchhickes) =>{
+            let query = `DELETE FROM messages
+            WHERE id_hitchhike = ?;`;
+            return connection.execute(query, [id_hitchhickes]);
+        },
+        deletePassengersByHitchhicke: (id_hitchhickes) =>{
+            let query = `DELETE FROM passengers
+            WHERE id_hitchhike = ?;`;
+            return connection.execute(query, [id_hitchhickes]);
         },
         getAllPassengers: () => {
             let query = `SELECT * FROM passengers`;
@@ -126,18 +142,53 @@ module.exports = (connection) => {
             h.hitch_initial_text,
             h.num_seats,
             u.user_name,
-            GROUP_CONCAT(pa.id_passengers, ',', pa.user_name, ',', pa.state
-                        SEPARATOR '|') 'passengers'
+            u.id_users,
+            GROUP_CONCAT(distinct pa.id_passengers, ',', pa.user_name, ',', pa.state
+                        SEPARATOR '|') 'passengers',
+            GROUP_CONCAT(distinct m.id_messages, ',', m.user_name, ',', m.mns_date, ',', m.mns_text
+                        SEPARATOR '|') 'messages'
             from hitchhikes h
             inner join users u on u.id_users = h.id_user_driver
             left join (SELECT p.id_passengers, u.user_name, p.state, p.id_hitchhike
                         FROM passengers p
                        INNER JOIN users u ON u.id_users = p.id_user) pa on pa.id_hitchhike = h.id_hitchhikes
+            left join (SELECT m.id_hitchhike, u.user_name, m.mns_date, m.mns_text, m.id_messages
+                       FROM messages m
+                      INNER JOIN users u on m.id_user = u.id_users) m on m.id_hitchhike = h.id_hitchhikes
             GROUP BY h.id_hitchhikes
             order by h.id_hitchhikes desc 
             limit 10;`;
 
             return connection.query(query);
+        },
+        getRidesByUser: (id_users) =>{
+            let query = `select h.id_hitchhikes,
+            h.departure_time, 
+            h.arrival_time,
+            h.departure_location,
+            h.arrival_location,
+            h.hitch_initial_text,
+            h.num_seats,
+            u.user_name,
+            u.id_users,
+            GROUP_CONCAT(DISTINCT pa.id_passengers, ',', pa.user_name, ',', pa.state
+                        SEPARATOR '|') 'passengers',
+            GROUP_CONCAT(distinct m.id_messages, ',', m.user_name, ',', m.mns_date, ',', m.mns_text
+                        SEPARATOR '|') 'messages'
+            from hitchhikes h
+            inner join users u on u.id_users = h.id_user_driver
+            left join (SELECT p.id_passengers, u.user_name, p.state, p.id_hitchhike
+                        FROM passengers p
+                       INNER JOIN users u ON u.id_users = p.id_user) pa on pa.id_hitchhike = h.id_hitchhikes
+            left join (SELECT m.id_hitchhike, u.user_name, m.mns_date, m.mns_text, m.id_messages
+                       FROM messages m
+                      INNER JOIN users u on m.id_user = u.id_users) m on m.id_hitchhike = h.id_hitchhikes
+            WHERE h.id_hitchhikes IN (SELECT h.id_hitchhikes FROM hitchhikes h
+                                     LEFT JOIN passengers p on p.id_hitchhike = h.id_hitchhikes
+                                     WHERE h.id_user_driver = ? OR p.id_user = ?)
+            GROUP BY h.id_hitchhikes;`;
+
+            return connection.execute(query, [id_users, id_users]);
         }
     };
 }

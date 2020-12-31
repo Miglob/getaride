@@ -1,9 +1,11 @@
-import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, GET_RECENT_RIDES } from "../actions/types";
+import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, GET_RECENT_RIDES, GET_MY_RIDES } from "../actions/types";
 
 const initialState = {
     rides: [],
     loading: false,
-    recentRides: []
+    recentRides: [],
+    myRides: [],
+    lastUpdated: new Date()
 }
 
 export default function (state = initialState, action) {
@@ -13,14 +15,23 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 rides: action.payload,//adicionar ao array rides
-                loading: false
+                loading: false,
+                lastUpdated: new Date()
             };
+            case GET_MY_RIDES:
+                return{
+                    ...state,
+                    myRides: action.payload,//adicionar ao array rides
+                    loading: false,
+                    lastUpdated: new Date()
+                };
 
         case GET_RECENT_RIDES:
             return {
                 ...state,
                 recentRides: action.payload,//adicionar ao array rides
-                loading: false
+                loading: false,
+                lastUpdated: new Date()
             };
 
         case RIDES_LOADING:

@@ -1,80 +1,54 @@
 import React, { Component } from "react";
 
 import MyRideInformation from "./MyRideInformation";
+import { getMyRides } from "../../../actions/rideActions";
+import { connect } from "react-redux";
 
 
 class MyRides extends Component {
 
+    state= {
+        initial : true
+    }
     //rankings ainda não existem
     //lado do servidor popular um array de passageiros para as rides
     //filtrar do lado do servidor as boleias que já espiraram
-    state = {
 
-        rides: [
-            {
-                user_name: "António",
-                ranking: 3,
-                departure_time: "2020-11-25 08:00:00",
-                arrival_time: "2020-11-25 08:15:00",
-                departure_location: "Setúbal",
-                arrival_location: "IPS",
-                num_seats: 3,
-                id_user_driver: true,
-                passengers: [
-                    {
-                        user_name: "Maria Albertina",
-                        state: "Cancelada"
-                    }
-                ]
-            },
-            {
-                user_name: "Mário",
-                ranking: 2,
-                departure_time: "2020-11-22 12:10:00",
-                arrival_time: "2020-11-22 12:25:00",
-                departure_location: "Paio Pires",
-                arrival_location: "IPS",
-                num_seats: 2,
-                id_user_driver: true,
-                passengers: [
-                    {
-                        user_name: "Margarida",
-                        state: "Pendente"
-                    }
-                ]
-            },
-            {
-                user_name: "Ricardo",
-                ranking: 2,
-                departure_time: "2020-11-22 12:10:00",
-                arrival_time: "2020-11-22 12:25:00",
-                departure_location: "Paio Pires",
-                arrival_location: "IPS",
-                num_seats: 2,
-                id_user_driver: true,
-                passengers: [
-                    {
-                        user_name: "Ricardo Carmo",
-                        state: "Confirmada"
-                    },
-                    {
-                        user_name: "Antonio",
-                        state: "Confirmada"
-                    },
+    // componentDidMount() {
 
-                ]
+    //     this.props.getMyRides(this.props.authState.user.id_users);
+    //     console.log(this.props.authState);
+    // }
+
+    componentWillReceiveProps(nextProps){
+        if(this.state.initial){
+            if(nextProps.authState.user){
+                this.props.getMyRides(nextProps.authState.user.id_users);
+                this.setState({initial : false});
             }
-        ],
+        }
+    }
+    //life cicle methods - é chamado no final
+    componentDidUpdate(prevProps, prevState) {
+        
+        if (prevProps.rideState.lastUpdated !== this.props.rideState.lastUpdated) {
+            //this.forceUpdate();
+        }
     }
 
     render() {
         return (
             <div>
                 <h1 style={{ textAlign: "center" }}>As minhas boleias</h1>
-                {this.state.rides.map(element => <MyRideInformation ride={element} />)}
+                {this.props.rideState.myRides.map(element => <MyRideInformation ride={element} />)}
             </div>
         );
     }
 }
 
-export default MyRides;
+const mapStateToProps = (state) => ({//conectar o estado para o reducer
+    rideState: state.rideReducer,
+    authState: state.authReducer
+});
+
+export default connect(mapStateToProps, { getMyRides })(MyRides);

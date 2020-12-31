@@ -77,7 +77,18 @@ class RecentRideDetails extends Component {
                         </div>
 
                         <p style={{ marginTop: "2em" }}>Informações adicionais: </p>
-                            {this.props.ride.hitch_initial_text}
+                        Mensagem inicial: {this.props.ride.hitch_initial_text}<br />
+                        {
+                            !!this.props.ride.messages ?
+                                this.props.ride.messages.map(message =>
+                                    <Row style={{ display: "flex", alignItems: "center", margin: "0.5em auto" }}>
+                                        <Col md="2" >{moment(message.mns_date).format("DD-MM-yyyy HH:mm")} horas</Col>
+                                        <Col md="2">{message.user_name}</Col>
+                                        <Col md="6">{message.mns_text}</Col>
+                                        <Col md="2"></Col>
+                                    </Row>
+                                ) : "Não existem passageiros"
+                        }
                     </Modal.Body>
                 </Modal>
             </>

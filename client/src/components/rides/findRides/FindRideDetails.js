@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+
 import PropTypes from "prop-types";
+
 
 import moment from "moment";
 
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
+import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
@@ -21,7 +22,8 @@ class FindRideDetails extends Component {
     }
 
     static propTypes = {
-        ride: PropTypes.object.isRequired
+        ride: PropTypes.object.isRequired,
+        user: PropTypes.object.isRequired
     }
 
     toggle = () => {
@@ -46,7 +48,9 @@ class FindRideDetails extends Component {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>Detalhes</Modal.Title>
-                        <Button onClick={() => alert("todo")} style={{ marginLeft: "65%" }}>Associar à boleia</Button>
+                        <Button onClick={() => alert("todo")}
+                            disabled={this.props.user && this.props.user.id_users === this.props.ride.id_users}
+                            style={{ marginLeft: "65%" }}>Associar à boleia</Button>
                     </Modal.Header>
                     <Modal.Body>
                         <p>Tem como boleia confirmada:</p>
@@ -80,11 +84,37 @@ class FindRideDetails extends Component {
                         </div>
 
                         <p style={{ marginTop: "2em" }}>Informações adicionais: </p>
-
-                        {this.props.ride.hitch_initial_text}
+                        Mensagem inicial: {this.props.ride.hitch_initial_text}<br />
+                        {
+                            !!this.props.ride.messages ?
+                                this.props.ride.messages.map(message =>
+                                    <Row style={{ display: "flex", alignItems: "center", margin: "0.5em auto" }}>
+                                        <Col md="2" >{moment(message.mns_date).format("DD-MM-yyyy HH:mm")} horas</Col>
+                                        <Col md="2">{message.user_name}</Col>
+                                        <Col md="6">{message.mns_text}</Col>
+                                        <Col md="2"></Col>
+                                    </Row>
+                                ) : "Não existem passageiros"
+                        }
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary" style={{ marginRight: "2em" }}>Criar mensagem</Button>
+                        <Row style={{ width: "100%", alignItems: "center" }}>
+                            <Col md={9}>
+                                <Form.Group>
+                                    <Form.Label>Comentários</Form.Label>
+                                    <Form.Control
+                                        onChange={this.onChange}
+                                        name="hitch_initial_text"
+                                        placeholder="comentários..."
+                                        as="textarea"
+                                        rows={3}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={3}>
+                                <Button variant="primary" style={{ marginRight: "2em" }}>Criar mensagem</Button>
+                            </Col>
+                        </Row>
                     </Modal.Footer>
                 </Modal>
             </>

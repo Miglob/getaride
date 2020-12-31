@@ -13,7 +13,8 @@ import FindRideDetails from "./FindRideDetails";
 class FindRideInformation extends Component {
 
     static propTypes = {
-        ride: PropTypes.object.isRequired
+        ride: PropTypes.object.isRequired,
+        user: PropTypes.object.isRequired
     }
 
     render() {
@@ -33,7 +34,8 @@ class FindRideInformation extends Component {
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <div>
                             {this.props.ride.id_user_driver ? ("Oferece: " + this.props.ride.num_seats + " lugares") : "Precisa de 1 lugar"}<br />
-                            <FindRideDetails ride={this.props.ride} /> <br />
+                            <FindRideDetails ride={this.props.ride}
+                                user={this.props.user} /> <br />
                         </div>
                     </div>
                 </div>

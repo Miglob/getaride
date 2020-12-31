@@ -63,7 +63,6 @@ export const login = ({ email, user_password }) => dispatch => {
             })
         })
         .catch(err => {
-            console.log(err.response.data);
             dispatch({
                 type: LOGIN_FAIL
             });

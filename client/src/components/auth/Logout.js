@@ -12,10 +12,15 @@ class Logout extends Component {
         logout: PropTypes.func.isRequired
     }
 
+    handleLogout = (event)=>{
+        this.props.logout(event);
+        window.location.pathname = "/";
+    }
+
     render() {
         return (
             <div>
-                <Button onClick={this.props.logout} style = {{marginLeft : "1em"}}>
+                <Button onClick={this.handleLogout} style = {{marginLeft : "1em"}}>
                     Logout
                 </Button>
             </div>

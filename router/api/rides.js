@@ -3,6 +3,60 @@ const router = express.Router();
 let database = require("../../database");//importar bd
 
 
+// @route   GET api/myRides
+// @desc    Get   rides by id user
+// @access  Public
+router.get('/myRides/:id', async (req, res) => {
+    try {
+        let id_users = req.params.id;
+        let [result] = await database.getRidesByUser(id_users);
+
+        result = result.map(e => {
+            if (e.passengers) {
+                let passengers = e.passengers.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id = arr[0];
+                    let name = arr[1];
+                    let state = arr[2];
+
+                    return {
+                        id_passengers: id,
+                        user_name: name,
+                        state
+                    };
+                });
+                e.passengers = passengers;
+            }
+
+            if (e.messages) {
+                let messages = e.messages.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id_messages = arr[0];
+                    let name = arr[1];
+                    let mns_date = arr[2];
+                    let mns_text = arr[3];
+
+                    return {
+                        mns_date,
+                        mns_text,
+                        user_name: name,
+                        id_messages
+                    };
+                });
+                e.messages = messages;
+            }
+            return e;})
+        // }).filter(e => {
+        //     let current = new Date();
+        //     let date = new Date(e.departure_time);
+        //     return (Math.ceil((current - date) / 10e2) < 0);
+        // });
+        console.log(result);
+        res.json(result);
+    } catch (e) {
+        res.status(500).send(e.toString());
+    }
+});
 
 // @route   GET api/rides/recentRides
 // @desc    Get  Recent rides
@@ -27,8 +81,30 @@ router.get('/recentRides', async (req, res) => {
                 });
                 e.passengers = passengers;
             }
+
+            if (e.messages) {
+                let messages = e.messages.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id_messages = arr[0];
+                    let name = arr[1];
+                    let mns_date = arr[2];
+                    let mns_text = arr[3];
+
+                    return {
+                        mns_date,
+                        mns_text,
+                        user_name: name,
+                        id_messages
+                    };
+                });
+                e.messages = messages;
+            }
             return e;
-        });
+        })/*.filter(e => {
+            let current = new Date();
+            let date = new Date(e.departure_time);
+            return (Math.ceil((current - date)/10e2) < 0);  
+        });*/
         res.json(result);
     } catch (e) {
         res.status(500).send(e.toString());
@@ -59,8 +135,30 @@ router.get("/", async (req, res) => {//comunicação com a bd, para await o asyn
                 });
                 e.passengers = passengers;
             }
+
+            if (e.messages) {
+                let messages = e.messages.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id_messages = arr[0];
+                    let name = arr[1];
+                    let mns_date = arr[2];
+                    let mns_text = arr[3];
+
+                    return {
+                        mns_date,
+                        mns_text,
+                        user_name: name,
+                        id_messages
+                    };
+                });
+                e.messages = messages;
+            }
             return e;
-        });
+        })/*.filter(e => {
+            let current = new Date();
+            let date = new Date(e.departure_time);
+            return (Math.ceil((current - date)/10e2) < 0); 
+        }); */
         res.json(result);
     } catch (e) {
         res.status(500).send(e.toString());
@@ -132,13 +230,17 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         let { id } = req.params;
-
-        let [result] = await database.deleteHitchHikeByID(id);
+        let [m] = await database.deleteMessagesByHitchhicke(id);
+        let [p] = await database.deletePassengersByHitchhicke(id);
+        let [h] = await database.deleteHitchHikeByID(id);
+        let [result] = await database.getRidesByUser(id);
         res.json(result);
     } catch (e) {
         res.status(500).send(e.toString());
     }
 });
+
+
 
 //fazer hitchhikes por condutor ou passageiro
 module.exports = router;

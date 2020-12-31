@@ -37,7 +37,7 @@ class FindRides extends Component {
 
     //life cicle methods - é chamado no final
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.rideState.rides !== this.props.rideState.rides) {
+        if (prevProps.rideState.lastUpdated !== this.props.rideState.lastUpdated) {
             this.search();
         }
     }
@@ -126,7 +126,8 @@ class FindRides extends Component {
 
                     </Row>
                     <h2 style={{ marginTop: "0.5em" }}>Lista de boleias</h2>
-                    {this.state.searchResults.map(element => <Row><FindRideInformation ride={element} /></Row>)}
+                    {this.state.searchResults.map(element => <Row><FindRideInformation ride={element} 
+                    user={this.props.user} /></Row>)}
                 </Form>
             </div>
 
@@ -135,7 +136,8 @@ class FindRides extends Component {
 }
 
 const mapStateToProps = (state) => ({//conectar o estado para o reducer
-    rideState: state.rideReducer
+    rideState: state.rideReducer,
+    user: state.authReducer.user
 });
 
 export default connect(mapStateToProps, { getRides })(FindRides);
