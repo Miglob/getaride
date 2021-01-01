@@ -5,6 +5,7 @@ export const RIDES_ERROR = "RIDES_ERROR";
 export const ADD_RIDE = "ADD_RIDE";
 export const GET_RECENT_RIDES = "GET_RECENT_RIDES";
 export const GET_MY_RIDES = "GET_MY_RIDES";
+export const DELETE_RIDE = "DELETE_RIDE";
 
 // Authentication
 export const USER_LOADING = "USER_LOADING";

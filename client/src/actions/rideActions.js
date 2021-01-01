@@ -1,4 +1,4 @@
-import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, ADD_RIDE, GET_RECENT_RIDES, GET_MY_RIDES } from "./types";
+import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, ADD_RIDE, GET_RECENT_RIDES, GET_MY_RIDES, DELETE_RIDE } from "./types";
 import axios from "axios";
 
 export const getRides = () => dispatch => {
@@ -67,3 +67,19 @@ export const getRecentRides = () => dispatch => {
             });
         });
 }
+
+export const deleteRide = (id_users, id_hitchhickes) => (dispatch) => {
+    axios.delete(`/api/rides`, {id_users, id_hitchhickes})
+        .then(res => {
+            dispatch({
+                type: DELETE_RIDE,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: RIDES_ERROR
+            });
+        });
+};
+

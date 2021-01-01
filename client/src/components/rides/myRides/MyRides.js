@@ -28,19 +28,12 @@ class MyRides extends Component {
             }
         }
     }
-    //life cicle methods - é chamado no final
-    componentDidUpdate(prevProps, prevState) {
-        
-        if (prevProps.rideState.lastUpdated !== this.props.rideState.lastUpdated) {
-            //this.forceUpdate();
-        }
-    }
 
     render() {
         return (
             <div>
                 <h1 style={{ textAlign: "center" }}>As minhas boleias</h1>
-                {this.props.rideState.myRides.map(element => <MyRideInformation ride={element} />)}
+                {  this.props.rideState.myRides.map(element => <MyRideInformation ride={element} user = {this.props.authState.user.id_users} />)}
             </div>
         );
     }

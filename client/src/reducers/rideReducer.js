@@ -1,4 +1,4 @@
-import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, GET_RECENT_RIDES, GET_MY_RIDES } from "../actions/types";
+import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, GET_RECENT_RIDES, GET_MY_RIDES, DELETE_RIDE } from "../actions/types";
 
 const initialState = {
     rides: [],
@@ -18,13 +18,14 @@ export default function (state = initialState, action) {
                 loading: false,
                 lastUpdated: new Date()
             };
-            case GET_MY_RIDES:
-                return{
-                    ...state,
-                    myRides: action.payload,//adicionar ao array rides
-                    loading: false,
-                    lastUpdated: new Date()
-                };
+        case DELETE_RIDE:
+        case GET_MY_RIDES:
+            return {
+                ...state,
+                myRides: action.payload,//adicionar ao array rides
+                loading: false,
+                lastUpdated: new Date()
+            };
 
         case GET_RECENT_RIDES:
             return {

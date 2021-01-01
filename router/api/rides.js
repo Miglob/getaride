@@ -227,13 +227,13 @@ router.put('/:id', async (req, res) => {
 // @route   DELETE api/rides/:id
 // @desc    Delete a Ride
 // @access  Public
-router.delete('/:id', async (req, res) => {
+router.delete('/', async (req, res) => {
     try {
-        let { id } = req.params;
-        let [m] = await database.deleteMessagesByHitchhicke(id);
-        let [p] = await database.deletePassengersByHitchhicke(id);
-        let [h] = await database.deleteHitchHikeByID(id);
-        let [result] = await database.getRidesByUser(id);
+        let { id_users, id_hitchhickes} = req.body; // Vai obter os dados do body
+        let [m] = await database.deleteMessagesByHitchhicke(id_hitchhickes);
+        let [p] = await database.deletePassengersByHitchhicke(id_hitchhickes);
+        let [h] = await database.deleteHitchHikeByID(id_hitchhickes);
+        let [result] = await database.getRidesByUser(id_users);
         res.json(result);
     } catch (e) {
         res.status(500).send(e.toString());
