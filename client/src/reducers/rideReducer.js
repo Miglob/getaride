@@ -1,4 +1,4 @@
-import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, GET_RECENT_RIDES, GET_MY_RIDES, DELETE_RIDE } from "../actions/types";
+import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, GET_RECENT_RIDES, GET_MY_RIDES, DELETE_RIDE, CREATE_PASSENGERS } from "../actions/types";
 
 const initialState = {
     rides: [],
@@ -11,6 +11,7 @@ const initialState = {
 export default function (state = initialState, action) {
 
     switch (action.type) {
+        case CREATE_PASSENGERS:
         case GET_RIDES:
             return {
                 ...state,

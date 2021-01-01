@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
+import { createPassenger } from "../../../actions/rideActions";
 import PropTypes from "prop-types";
 
 
@@ -32,6 +34,23 @@ class FindRideDetails extends Component {
         });
     }
 
+    createPassenger = () => {
+
+        this.props.createPassenger(this.props.user.id_users, this.props.ride.id_hitchhikes)
+    }
+
+    checkIfUserIsPassenger = () => {
+        let result = false;
+        if (!!this.props.ride.passengers && !!this.props.user) {
+            this.props.ride.passengers.forEach(element => {
+                if (element.id_user == this.props.user.id_users) {
+                    result = true;
+                }
+            });
+        }
+        return result;
+    }
+
     render() {
         return (
             <>
@@ -48,8 +67,9 @@ class FindRideDetails extends Component {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>Detalhes</Modal.Title>
-                        <Button onClick={() => alert("todo")}
-                            disabled={this.props.user && this.props.user.id_users === this.props.ride.id_users}
+
+                        <Button onClick={this.createPassenger}
+                            disabled={!this.props.user || (this.props.user && this.props.user.id_users === this.props.ride.id_users) || (this.props.user && this.checkIfUserIsPassenger())}
                             style={{ marginLeft: "65%" }}>Associar à boleia</Button>
                     </Modal.Header>
                     <Modal.Body>
@@ -122,4 +142,7 @@ class FindRideDetails extends Component {
     }
 }
 
-export default FindRideDetails;
+const mapStateToProps = state => ({
+
+})
+export default connect(mapStateToProps, { createPassenger })(FindRideDetails);

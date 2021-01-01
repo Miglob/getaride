@@ -1,4 +1,4 @@
-import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, ADD_RIDE, GET_RECENT_RIDES, GET_MY_RIDES, DELETE_RIDE } from "./types";
+import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, ADD_RIDE, GET_RECENT_RIDES, GET_MY_RIDES, DELETE_RIDE, CREATE_PASSENGERS } from "./types";
 import axios from "axios";
 
 export const getRides = () => dispatch => {
@@ -9,7 +9,6 @@ export const getRides = () => dispatch => {
             payload: res.data
         }))
         .catch(err => {
-            console.log(err.response.data);
             dispatch({
                 type: RIDES_ERROR
             });
@@ -68,13 +67,30 @@ export const getRecentRides = () => dispatch => {
         });
 }
 
-export const deleteRide = (id_users, id_hitchhickes) => (dispatch) => {
-    axios.delete(`/api/rides`, {id_users, id_hitchhickes})
+export const deleteRide = (id_users, id_hitchhikes) => (dispatch) => {
+
+    axios.delete(`/api/rides`, {data: {id_users, id_hitchhikes}})
         .then(res => {
             dispatch({
                 type: DELETE_RIDE,
                 payload: res.data
             })
+        })
+        .catch(err => {
+            dispatch({
+                type: RIDES_ERROR
+            });
+        });
+};
+
+export const createPassenger = (id_user, id_hitchhike) => (dispatch) => {
+
+    axios.post("/api/rides/createPassengers", {id_user, id_hitchhike})
+        .then(res => {
+            dispatch({
+                type: CREATE_PASSENGERS,
+                payload: res.data
+            });
         })
         .catch(err => {
             dispatch({

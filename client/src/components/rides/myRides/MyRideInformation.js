@@ -1,21 +1,26 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
+import { connect } from "react-redux";
 
 import Button from "react-bootstrap/Button";
 
 import monkey1 from '../../../images/monkey1.gif';
 
 import MyRideDetails from "./MyRideDetails";
-
+import { deleteRide } from "../../../actions/rideActions";
 
 
 class MyRideInformation extends Component {
 
-//Botão anular só  para aparecer se o utilizador for o dono da boleia
+    //Botão anular só  para aparecer se o utilizador for o dono da boleia
 
     static propTypes = {
         ride: PropTypes.object.isRequired
+    }
+
+    delete = () =>{
+        this.props.deleteRide(this.props.user, this.props.ride.id_hitchhikes)
     }
 
     render() {
@@ -35,8 +40,14 @@ class MyRideInformation extends Component {
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <div>
                             {this.props.ride.id_user_driver ? ("Oferece: " + this.props.ride.num_seats + " lugares") : "Precisa de 1 lugar"}<br />
-                            <MyRideDetails ride={this.props.ride}/> <br />   
-                            <Button size="sm" variant="danger" style={{ marginTop: "0.5em" }}><b>Anular</b></Button>
+                            <MyRideDetails ride={this.props.ride} /> <br />
+                            <Button 
+                                size="sm"
+                                variant="danger"
+                                disabled={this.props.user != this.props.ride.id_users}
+                                onClick={this.delete}
+                                style={{ marginTop: "0.5em" }}><b>Anular</b></Button>
+
                         </div>
                     </div>
                 </div>
@@ -46,4 +57,8 @@ class MyRideInformation extends Component {
     }
 }
 
-export default MyRideInformation;
+const mapStateToProps = (state) => ({//conectar o estado para o reducer
+
+});
+
+export default connect(mapStateToProps, { deleteRide })(MyRideInformation);

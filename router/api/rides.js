@@ -3,6 +3,64 @@ const router = express.Router();
 let database = require("../../database");//importar bd
 
 
+
+router.post('/createPassengers', async (req, res) => {
+    try {
+        let { id_user, id_hitchhike } = req.body; // Vai obter os dados do body
+       let [pass] = await database.createPassenger(id_user, id_hitchhike);
+
+        let [result] = await database.getAllHitchhikes();
+
+        result = result.map(e => {
+            if (e.passengers) {
+                let passengers = e.passengers.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id = arr[0];
+                    let name = arr[1];
+                    let state = arr[2];
+                    let id_user = arr[3];
+
+                    return {
+                        id_passengers: id,
+                        user_name: name,
+                        state,
+                        id_user
+                    };
+                });
+                e.passengers = passengers;
+            }
+
+            if (e.messages) {
+                let messages = e.messages.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id_messages = arr[0];
+                    let name = arr[1];
+                    let mns_date = arr[2];
+                    let mns_text = arr[3];
+
+                    return {
+                        mns_date,
+                        mns_text,
+                        user_name: name,
+                        id_messages
+                    };
+                });
+                e.messages = messages;
+            }
+            return e;
+        })/*.filter(e => {
+            let current = new Date();
+            let date = new Date(e.departure_time);
+            return (Math.ceil((current - date)/10e2) < 0); 
+        }); */
+
+       return res.json(result);
+    } catch (e) {
+        return res.status(500).send(e.toString());
+    }
+});
+
+
 // @route   GET api/myRides
 // @desc    Get   rides by id user
 // @access  Public
@@ -45,13 +103,13 @@ router.get('/myRides/:id', async (req, res) => {
                 });
                 e.messages = messages;
             }
-            return e;})
+            return e;
+        })
         // }).filter(e => {
         //     let current = new Date();
         //     let date = new Date(e.departure_time);
         //     return (Math.ceil((current - date) / 10e2) < 0);
         // });
-        console.log(result);
         res.json(result);
     } catch (e) {
         res.status(500).send(e.toString());
@@ -126,11 +184,13 @@ router.get("/", async (req, res) => {//comunicação com a bd, para await o asyn
                     let id = arr[0];
                     let name = arr[1];
                     let state = arr[2];
+                    let id_user = arr[3];
 
                     return {
                         id_passengers: id,
                         user_name: name,
-                        state
+                        state,
+                        id_user
                     };
                 });
                 e.passengers = passengers;
@@ -229,16 +289,61 @@ router.put('/:id', async (req, res) => {
 // @access  Public
 router.delete('/', async (req, res) => {
     try {
-        let { id_users, id_hitchhickes} = req.body; // Vai obter os dados do body
-        let [m] = await database.deleteMessagesByHitchhicke(id_hitchhickes);
-        let [p] = await database.deletePassengersByHitchhicke(id_hitchhickes);
-        let [h] = await database.deleteHitchHikeByID(id_hitchhickes);
+
+        let { id_users, id_hitchhikes } = req.body; // Vai obter os dados do body
+        let [m] = await database.deleteMessagesByHitchhicke(id_hitchhikes);
+        let [p] = await database.deletePassengersByHitchhicke(id_hitchhikes);
+        let [h] = await database.deleteHitchHikeByID(id_hitchhikes);
         let [result] = await database.getRidesByUser(id_users);
+
+        result = result.map(e => {
+            if (e.passengers) {
+                let passengers = e.passengers.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id = arr[0];
+                    let name = arr[1];
+                    let state = arr[2];
+
+                    return {
+                        id_passengers: id,
+                        user_name: name,
+                        state
+                    };
+                });
+                e.passengers = passengers;
+            }
+
+            if (e.messages) {
+                let messages = e.messages.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id_messages = arr[0];
+                    let name = arr[1];
+                    let mns_date = arr[2];
+                    let mns_text = arr[3];
+
+                    return {
+                        mns_date,
+                        mns_text,
+                        user_name: name,
+                        id_messages
+                    };
+                });
+                e.messages = messages;
+            }
+            return e;
+        })/*.filter(e => {
+            let current = new Date();
+            let date = new Date(e.departure_time);
+            return (Math.ceil((current - date)/10e2) < 0); 
+        }); */
+
         res.json(result);
     } catch (e) {
         res.status(500).send(e.toString());
     }
 });
+
+
 
 
 

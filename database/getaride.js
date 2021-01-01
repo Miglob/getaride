@@ -18,13 +18,13 @@ module.exports = (connection) => {
             h.num_seats,
             u.user_name,
             u.id_users,
-            GROUP_CONCAT(distinct pa.id_passengers, ',', pa.user_name, ',', pa.state
+            GROUP_CONCAT(distinct pa.id_passengers, ',', pa.user_name, ',', pa.state, ',', pa.id_user
                         SEPARATOR '|') 'passengers',
             GROUP_CONCAT(distinct m.id_messages, ',', m.user_name, ',', m.mns_date, ',', m.mns_text
                         SEPARATOR '|') 'messages'
             from hitchhikes h
             inner join users u on u.id_users = h.id_user_driver
-            left join (SELECT p.id_passengers, u.user_name, p.state, p.id_hitchhike
+            left join (SELECT p.id_passengers, u.user_name, p.state, p.id_hitchhike, p.id_user
                         FROM passengers p
                        INNER JOIN users u ON u.id_users = p.id_user) pa on pa.id_hitchhike = h.id_hitchhikes
             left join (SELECT m.id_hitchhike, u.user_name, m.mns_date, m.mns_text, m.id_messages
@@ -189,6 +189,11 @@ module.exports = (connection) => {
             GROUP BY h.id_hitchhikes;`;
 
             return connection.execute(query, [id_users, id_users]);
+        },
+        createPassenger: (id_user, id_hitchhike) => {
+            let query = `INSERT INTO passengers (state, id_user, id_hitchhike) VALUES ("Pendente",?,?);`;
+
+            return connection.execute(query, [id_user, id_hitchhike]);
         }
     };
 }
