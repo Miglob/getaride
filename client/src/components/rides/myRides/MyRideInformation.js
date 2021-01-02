@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import Button from "react-bootstrap/Button";
 
-import monkey1 from '../../../images/monkey1.gif';
+import GR from '../../../images/GR.png';
 
 import MyRideDetails from "./MyRideDetails";
 import { deleteRide } from "../../../actions/rideActions";
@@ -19,7 +19,7 @@ class MyRideInformation extends Component {
         ride: PropTypes.object.isRequired
     }
 
-    delete = () =>{
+    delete = () => {
         this.props.deleteRide(this.props.user, this.props.ride.id_hitchhikes)
     }
 
@@ -29,7 +29,7 @@ class MyRideInformation extends Component {
                 <hr />
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <img src={monkey1} style={{ height: "80px", width: "80px" }} />
+                        <img src={GR} style={{ height: "80px", width: "132px" }} />
                         <div style={{ marginLeft: "0.5em", textAlign: "left" }}>
                             {this.props.ride.user_name} Ranking: {this.props.ride.ranking} <br />
                         Vai sair em: {moment(this.props.ride.departure_time).format("DD-MM-YYYY [às] HH:mm [horas]")}<br />
@@ -40,8 +40,8 @@ class MyRideInformation extends Component {
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <div>
                             {this.props.ride.id_user_driver ? ("Oferece: " + this.props.ride.num_seats + " lugares") : "Precisa de 1 lugar"}<br />
-                            <MyRideDetails ride={this.props.ride} user = {this.props.user} /> <br />
-                            <Button 
+                            <MyRideDetails ride={this.props.ride} user={this.props.user} /> <br />
+                            <Button
                                 size="sm"
                                 variant="danger"
                                 disabled={this.props.user != this.props.ride.id_users}

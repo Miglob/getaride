@@ -33,7 +33,7 @@ class App extends Component {
         <div className="App" style={{ backgroundColor: "#eee" }}>
           <Router>
             <NavTopBar />
-            <Card style={{ width: "80%", margin: "2em auto auto", padding: "2em", maxHeight: "80%" }}>
+            <Card style={{ width: "80%", margin: "2em auto auto", padding: "2em", maxHeight: "80%", overflowY: "scroll" }}>
               {/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}
               <Switch>
                 <Route path="/stuff">

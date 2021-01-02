@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 
-import Button from "react-bootstrap/Button";
 
-import monkey1 from '../../../images/monkey1.gif';
+
+import GR from '../../../images/GR.png';
 
 import FindRideDetails from "./FindRideDetails";
 
@@ -23,7 +23,7 @@ class FindRideInformation extends Component {
                 <hr />
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <img src={monkey1} style={{ height: "80px", width: "80px" }} />
+                        <img src={GR} style={{ height: "80px", width: "132px" }} />
                         <div style={{ marginLeft: "0.5em", textAlign: "left" }}>
                             {this.props.ride.user_name} Ranking: {this.props.ride.ranking} <br />
                         Vai sair em: {moment(this.props.ride.departure_time).format("DD-MM-YYYY [às] HH:mm [horas]")}<br />

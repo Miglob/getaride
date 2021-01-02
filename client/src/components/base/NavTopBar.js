@@ -11,7 +11,8 @@ import LoginModal from "../auth/LoginModal";
 import Logout from "../auth/Logout";
 import RegisterModal from "../auth/RegisterModal";
 
-import queen from '../../images/queen1.gif';
+
+import Abc from '../../images/4.png';
 
 
 class NavTopBar extends Component {
@@ -23,15 +24,16 @@ class NavTopBar extends Component {
     render() {
         return (
             <Navbar /*bg="light" */ expand="lg" style={{ minHeight: "10vh", backgroundColor: "#245c8d" }}>
-                <Navbar.Brand href="/recentRides">
+                <Navbar.Brand href="/recentRides" style ={{alignItems: "center", display: "flex"}}>
                     <img
                         alt=""
-                        src={queen}
+                        src={Abc}
+                        style={{ height: "60px", width: "111px" }}
                         width="30"
                         height="30"
                         className="d-inline-block align-top"
                     />{' '}
-                    Getaride
+                    <span style = {{marginLeft: "0.5em", fontSize: "35px", color: "whitesmoke"}}>Getaride</span>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" >
