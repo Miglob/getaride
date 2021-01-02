@@ -60,6 +60,62 @@ router.post('/createPassengers', async (req, res) => {
     }
 });
 
+router.post('/createMessage', async (req, res) => {
+    try {
+        let { mns_text, id_user, id_hitchhike } = req.body; // Vai obter os dados do body
+       let [pass] = await database.createMessage(mns_text, id_user, id_hitchhike);
+
+        let [result] = await database.getAllHitchhikes();
+
+        result = result.map(e => {
+            if (e.passengers) {
+                let passengers = e.passengers.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id = arr[0];
+                    let name = arr[1];
+                    let state = arr[2];
+                    let id_user = arr[3];
+
+                    return {
+                        id_passengers: id,
+                        user_name: name,
+                        state,
+                        id_user
+                    };
+                });
+                e.passengers = passengers;
+            }
+
+            if (e.messages) {
+                let messages = e.messages.split('|').map(p => {
+                    let arr = p.split(',');
+                    let id_messages = arr[0];
+                    let name = arr[1];
+                    let mns_date = arr[2];
+                    let mns_text = arr[3];
+
+                    return {
+                        mns_date,
+                        mns_text,
+                        user_name: name,
+                        id_messages
+                    };
+                });
+                e.messages = messages;
+            }
+            return e;
+        })/*.filter(e => {
+            let current = new Date();
+            let date = new Date(e.departure_time);
+            return (Math.ceil((current - date)/10e2) < 0); 
+        }); */
+
+       return res.json(result);
+    } catch (e) {
+        return res.status(500).send(e.toString());
+    }
+});
+
 
 // @route   GET api/myRides
 // @desc    Get   rides by id user

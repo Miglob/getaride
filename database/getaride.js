@@ -21,6 +21,7 @@ module.exports = (connection) => {
             GROUP_CONCAT(distinct pa.id_passengers, ',', pa.user_name, ',', pa.state, ',', pa.id_user
                         SEPARATOR '|') 'passengers',
             GROUP_CONCAT(distinct m.id_messages, ',', m.user_name, ',', m.mns_date, ',', m.mns_text
+                        order by m.mns_date asc
                         SEPARATOR '|') 'messages'
             from hitchhikes h
             inner join users u on u.id_users = h.id_user_driver
@@ -28,8 +29,8 @@ module.exports = (connection) => {
                         FROM passengers p
                        INNER JOIN users u ON u.id_users = p.id_user) pa on pa.id_hitchhike = h.id_hitchhikes
             left join (SELECT m.id_hitchhike, u.user_name, m.mns_date, m.mns_text, m.id_messages
-                       FROM messages m
-                      INNER JOIN users u on m.id_user = u.id_users) m on m.id_hitchhike = h.id_hitchhikes
+                       FROM messages m                      
+                      INNER JOIN users u on m.id_user = u.id_users) m on m.id_hitchhike = h.id_hitchhikes 
             GROUP BY h.id_hitchhikes;`;
             // return queryDb(connection, query);
             return connection.query(query);
@@ -80,12 +81,12 @@ module.exports = (connection) => {
             let query = `DELETE FROM hitchhikes WHERE id_hitchhikes = ?`;
             return connection.execute(query, [id]);
         },
-        deleteMessagesByHitchhicke : (id_hitchhickes) =>{
+        deleteMessagesByHitchhicke: (id_hitchhickes) => {
             let query = `DELETE FROM messages
             WHERE id_hitchhike = ?;`;
             return connection.execute(query, [id_hitchhickes]);
         },
-        deletePassengersByHitchhicke: (id_hitchhickes) =>{
+        deletePassengersByHitchhicke: (id_hitchhickes) => {
             let query = `DELETE FROM passengers
             WHERE id_hitchhike = ?;`;
             return connection.execute(query, [id_hitchhickes]);
@@ -133,7 +134,7 @@ module.exports = (connection) => {
 
             return connection.execute(query, [id_users]);
         },
-        getRecentCreatedRides: () =>{
+        getRecentCreatedRides: () => {
             let query = `select h.id_hitchhikes,
             h.departure_time, 
             h.arrival_time,
@@ -146,7 +147,8 @@ module.exports = (connection) => {
             GROUP_CONCAT(distinct pa.id_passengers, ',', pa.user_name, ',', pa.state
                         SEPARATOR '|') 'passengers',
             GROUP_CONCAT(distinct m.id_messages, ',', m.user_name, ',', m.mns_date, ',', m.mns_text
-                        SEPARATOR '|') 'messages'
+                order by m.mns_date asc
+                SEPARATOR '|') 'messages'
             from hitchhikes h
             inner join users u on u.id_users = h.id_user_driver
             left join (SELECT p.id_passengers, u.user_name, p.state, p.id_hitchhike
@@ -161,7 +163,7 @@ module.exports = (connection) => {
 
             return connection.query(query);
         },
-        getRidesByUser: (id_users) =>{
+        getRidesByUser: (id_users) => {
             let query = `select h.id_hitchhikes,
             h.departure_time, 
             h.arrival_time,
@@ -172,9 +174,10 @@ module.exports = (connection) => {
             u.user_name,
             u.id_users,
             GROUP_CONCAT(DISTINCT pa.id_passengers, ',', pa.user_name, ',', pa.state
-                        SEPARATOR '|') 'passengers',
+                SEPARATOR '|') 'passengers',
             GROUP_CONCAT(distinct m.id_messages, ',', m.user_name, ',', m.mns_date, ',', m.mns_text
-                        SEPARATOR '|') 'messages'
+                order by m.mns_date asc 
+                SEPARATOR '|') 'messages'
             from hitchhikes h
             inner join users u on u.id_users = h.id_user_driver
             left join (SELECT p.id_passengers, u.user_name, p.state, p.id_hitchhike
@@ -194,6 +197,12 @@ module.exports = (connection) => {
             let query = `INSERT INTO passengers (state, id_user, id_hitchhike) VALUES ("Pendente",?,?);`;
 
             return connection.execute(query, [id_user, id_hitchhike]);
+        },
+        createMessage: (mns_text, id_user, id_hitchhike) => {
+            let query = `insert into messages (mns_text, id_user, id_hitchhike) values(?, ?, ?);`;
+
+            return connection.execute(query, [mns_text, id_user, id_hitchhike]);
         }
+
     };
 }
