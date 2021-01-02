@@ -40,7 +40,7 @@ class MyRideInformation extends Component {
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <div>
                             {this.props.ride.id_user_driver ? ("Oferece: " + this.props.ride.num_seats + " lugares") : "Precisa de 1 lugar"}<br />
-                            <MyRideDetails ride={this.props.ride} /> <br />
+                            <MyRideDetails ride={this.props.ride} user = {this.props.user} /> <br />
                             <Button 
                                 size="sm"
                                 variant="danger"

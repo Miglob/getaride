@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { createPassenger } from "../../../actions/rideActions";
+import { createPassenger, createMessage } from "../../../actions/rideActions";
 import PropTypes from "prop-types";
 
 
@@ -20,7 +20,8 @@ class FindRideDetails extends Component {
     //Condutor não se pode associar à própria boleia
 
     state = {
-        modalOpen: false
+        modalOpen: false, 
+        message: ""
     }
 
     static propTypes = {
@@ -39,6 +40,19 @@ class FindRideDetails extends Component {
         this.props.createPassenger(this.props.user.id_users, this.props.ride.id_hitchhikes)
     }
 
+    createMessage = () => {
+
+        if(!!this.state.message && this.state.message.trim().length > 0)
+        {
+            this.props.createMessage(this.state.message, this.props.user.id_users, this.props.ride.id_hitchhikes, false);
+            this.setState({
+                message: ""
+              });
+      
+
+        }
+    }
+
     checkIfUserIsPassenger = () => {
         let result = false;
         if (!!this.props.ride.passengers && !!this.props.user) {
@@ -49,6 +63,12 @@ class FindRideDetails extends Component {
             });
         }
         return result;
+    }
+
+    onChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
     }
 
     render() {
@@ -124,7 +144,7 @@ class FindRideDetails extends Component {
                                     <Form.Label>Comentários</Form.Label>
                                     <Form.Control
                                         onChange={this.onChange}
-                                        name="hitch_initial_text"
+                                        name="message"
                                         placeholder="comentários..."
                                         as="textarea"
                                         rows={3}
@@ -132,7 +152,7 @@ class FindRideDetails extends Component {
                                 </Form.Group>
                             </Col>
                             <Col md={3}>
-                                <Button variant="primary" style={{ marginRight: "2em" }}>Criar mensagem</Button>
+                                <Button variant="primary" onClick = {this.createMessage} style={{ marginRight: "2em" }}>Criar mensagem</Button>
                             </Col>
                         </Row>
                     </Modal.Footer>
@@ -145,4 +165,4 @@ class FindRideDetails extends Component {
 const mapStateToProps = state => ({
 
 })
-export default connect(mapStateToProps, { createPassenger })(FindRideDetails);
+export default connect(mapStateToProps, { createPassenger, createMessage })(FindRideDetails);

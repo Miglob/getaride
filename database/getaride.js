@@ -202,6 +202,11 @@ module.exports = (connection) => {
             let query = `insert into messages (mns_text, id_user, id_hitchhike) values(?, ?, ?);`;
 
             return connection.execute(query, [mns_text, id_user, id_hitchhike]);
+        },
+        alterPassengerState: (id_passengers, state) => {
+            let query = `update passengers set state = ? where id_passengers = ?;`;
+
+            return connection.execute(query, [state, id_passengers]);
         }
 
     };

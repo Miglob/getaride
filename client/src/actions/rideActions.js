@@ -1,4 +1,4 @@
-import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, ADD_RIDE, GET_RECENT_RIDES, GET_MY_RIDES, DELETE_RIDE, CREATE_PASSENGERS } from "./types";
+import { GET_RIDES, RIDES_LOADING, RIDES_ERROR, ADD_RIDE, GET_RECENT_RIDES, GET_MY_RIDES, DELETE_RIDE, CREATE_PASSENGERS, CREATE_MESSAGE } from "./types";
 import axios from "axios";
 
 export const getRides = () => dispatch => {
@@ -89,6 +89,47 @@ export const createPassenger = (id_user, id_hitchhike) => (dispatch) => {
         .then(res => {
             dispatch({
                 type: CREATE_PASSENGERS,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            dispatch({
+                type: RIDES_ERROR
+            });
+        });
+};
+
+export const createMessage = (mns_text, id_user, id_hitchhike, myRide) => (dispatch) => {
+
+
+
+    axios.post("/api/rides/createMessage", {mns_text, id_user, id_hitchhike, myRide})
+        .then(res => {
+            if(myRide){
+                dispatch({
+                    type: GET_MY_RIDES,
+                    payload: res.data
+                });
+            }else{
+                dispatch({
+                    type: GET_RIDES,
+                    payload: res.data
+                });
+            }   
+        })
+        .catch(err => {
+            dispatch({
+                type: RIDES_ERROR
+            });
+        });
+};
+
+export const alterPassengerState = (id_user, id_passengers, state) => (dispatch) => {
+
+    axios.post("/api/rides/alterPassengerState", {id_user, id_passengers, state})
+        .then(res => {
+            dispatch({
+                type: GET_MY_RIDES,
                 payload: res.data
             });
         })
