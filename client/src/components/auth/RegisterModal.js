@@ -74,7 +74,7 @@ class RegisterModal extends Component {
                 <Button onClick={this.openModal}>Registar</Button>
 
                 <Modal show={this.state.modal} onHide={this.closeModal}>
-                    <Modal.Header closeButton>
+                    <Modal.Header closeButton style= {{ backgroundColor: "#245c8d", color:"white" }}>
                         <Modal.Title>Registar</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>

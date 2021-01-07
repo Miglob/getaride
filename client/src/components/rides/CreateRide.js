@@ -72,7 +72,7 @@ class CreateRide extends Component {
     render() {
         return (
             <div>
-                <h1 style={{ textAlign: "center" }}>Criar Boleia</h1>
+                <h1 style={{ textAlign: "center", fontWeight: "bold", color:"#245c8d" }}>Criar Boleia</h1>
 
                 <OverlayTrigger trigger="click" placement="right" overlay={
                     <Popover id="popover-basic">
@@ -96,21 +96,26 @@ class CreateRide extends Component {
                     <Row>
                         <Col >
                             <Form.Group>
-                                <Form.Label>Origem da boleia</Form.Label>
-                                <Form.Control onChange={this.onChange} name="departure_location" placeholder="Origem da boleia" />
+                                <Form.Label style={{ fontWeight: "bold", color:"#245c8d" }}>Origem da boleia</Form.Label>
+                                <Form.Control onChange={this.onChange}
+                                    name="departure_location"
+                                    placeholder="Origem da boleia" />
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group>
-                                <Form.Label>Destino da boleia</Form.Label>
-                                <Form.Control onChange={this.onChange} name="arrival_location" placeholder="Destino da boleia" />
+                                <Form.Label style={{ fontWeight: "bold", color:"#245c8d" }}>Destino da boleia</Form.Label>
+                                <Form.Control onChange={this.onChange}
+                                    name="arrival_location"
+                                    placeholder="Destino da boleia"
+                                />
                             </Form.Group>
                         </Col>
                     </Row>
                     <Row style={{ marginTop: "5em" }}>
                         <Col md={6}>
                             <Form.Group style={{ display: 'flex' }}>
-                                <Form.Label style={{ marginRight: '8px' }}>Lugares disponiveis</Form.Label>
+                                <Form.Label style={{ marginRight: '8px', fontWeight: "bold", color:"#245c8d" }}>Lugares disponiveis</Form.Label>
                                 <Form.Control
                                     onChange={this.onChange}
                                     name="num_seats"
@@ -126,7 +131,7 @@ class CreateRide extends Component {
                     <Row>
                         <Col md={10}>
                             <Form.Group>
-                                <Form.Label>Comentários</Form.Label>
+                                <Form.Label style={{ fontWeight: "bold", marginTop:"2.5em", color:"#245c8d" }}>Comentários</Form.Label>
                                 <Form.Control
                                     onChange={this.onChange}
                                     name="hitch_initial_text"
@@ -141,8 +146,8 @@ class CreateRide extends Component {
                     <Row style={{ marginTop: "5em" }}>
                         <Col md={9}></Col>
                         <Col md={3}>
-                            <Button variant="danger">Cancelar</Button>
-                            <Button onClick={this.createRide} style = {{marginLeft : "2em"}}>Submeter</Button>
+                            <Button variant="danger" style={{ marginBottom: "1.5em" }}>Cancelar</Button>
+                            <Button onClick={this.createRide} style={{ marginLeft: "2em", marginBottom: "1.5em" }}>Submeter</Button>
                         </Col>
                     </Row>
                 </Form>

@@ -40,9 +40,9 @@ class DateSelector extends Component {
     render() {
         return (
             <div>
-                <h2>Seleccione uma data e hora para a sua boleia:</h2>
+                <h2 style= {{ fontWeight:"bold", color:"#245c8d"}}>Seleccione uma data e horas para a sua boleia:</h2>
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                    <div>
+                    <div style= {{ marginTop:" 1.5em" }}>
                         <DatePicker
                             selected={this.state.date}
                             onChange={newDate => this.onChange(newDate, "date")}
@@ -51,7 +51,7 @@ class DateSelector extends Component {
                             minDate={new Date()}
                         />
                     </div>
-                    <div style={{ marginLeft: "7em" }}>
+                    <div style={{ marginLeft: "7em", marginTop:" 1.5em" }}>
                         <DatePicker
                             selected={this.state.startTime}
                             onChange={newStartTime => this.onChange(newStartTime, "startTime")}
@@ -64,7 +64,7 @@ class DateSelector extends Component {
                             placeholderText="Insira uma hora inicial"
                         />
                     </div>
-                    <div style={{ marginLeft: "7em" }}>
+                    <div style={{ marginLeft: "7em", marginTop:" 1.5em" }}>
                         <DatePicker
                             selected={this.state.endTime}
                             onChange={newEndTime => this.onChange(newEndTime, "endTime")}

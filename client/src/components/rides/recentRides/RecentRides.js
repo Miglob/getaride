@@ -81,7 +81,7 @@ class RecentRides extends Component {
     render() {
         return (
             <div>
-                <h1 style={{ textAlign: "center" }}>Boleias recentes</h1>
+                <h1 style={{ textAlign: "center", fontWeight: "bold" }}>Boleias recentes</h1>
                 {this.props.rideState.recentRides.map(element => <RecentRideInformation ride={element} />)}
             </div>
         );

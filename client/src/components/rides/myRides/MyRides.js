@@ -32,7 +32,7 @@ class MyRides extends Component {
     render() {
         return (
             <div>
-                <h1 style={{ textAlign: "center" }}>As minhas boleias</h1>
+                <h1 style={{ textAlign: "center", fontWeight:"bold" }}>As minhas boleias</h1>
                 {  this.props.rideState.myRides.map(element => <MyRideInformation ride={element} user = {this.props.authState.user.id_users} />)}
             </div>
         );

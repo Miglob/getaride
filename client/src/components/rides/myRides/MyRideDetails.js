@@ -68,27 +68,27 @@ class MyRideDetails extends Component {
                     keyboard={false}
                     size="lg"
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header closeButton style= {{ backgroundColor: "#245c8d", color: "whitesmoke" }}>
                         <Modal.Title>Detalhes</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
-                        <p>Tem como boleia confirmada:</p>
+                    <Modal.Body style = {{ fontFamily: "Verdana"}}>
+                        <h3 style={{ fontWeight: "bold" }}>Detalhes da sua boleia:</h3>
                         <p>Nome: {this.props.ride.user_name}<span style={{ marginLeft: "1em" }}>Ranking: {this.props.ride.ranking}</span> </p>
 
                         {/*botao*/}
 
 
-                        <p>Pormenores da boleia: </p>
+                        <h5 style={{ fontWeight: "bold" }}>Pormenores da boleia: </h5>
                         <Row>
-                            <Col>Origem: {this.props.ride.departure_location}</Col>
-                            <Col> Destino: {this.props.ride.arrival_location}</Col>
+                            <Col style={{ fontWeight: "bold" }}>Origem: {this.props.ride.departure_location}</Col>
+                            <Col style={{ fontWeight: "bold" }}> Destino: {this.props.ride.arrival_location}</Col>
                         </Row>
                         <Row>
                             <Col>Hora partida: {moment(this.props.ride.departure_time).format("DD-MM-yyyy HH:mm")}</Col>
                             <Col>Hora chegada: {moment(this.props.ride.arrival_time).format("DD-MM-yyyy HH:mm")}</Col>
                         </Row>
 
-                        <p style={{ marginTop: "2em" }}>Passageiros: </p>
+                        <h5 style={{ marginTop: "2em", fontWeight: "bold", marginTop: "2em" }}>Passageiros: </h5>
 
                         <div>
                             {
@@ -100,9 +100,9 @@ class MyRideDetails extends Component {
                                                 {
                                                     this.props.user == this.props.ride.id_users ?
                                                         <DropdownButton title={passenger.state} size="sm" style={{ marginLeft: "0.5em" }}  >
-                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Pendente")}>Pendente</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Confirmada")}>Confirmada</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Cancelada")}>Cancelada</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Pendente")} style= {{ color:"#fdd603" }}>Pendente</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Confirmada")} style= {{ color:"green" }}>Confirmar</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Cancelada")} style= {{ color:"red" }}>Cancelar</Dropdown.Item>
                                                         </DropdownButton>
                                                         : passenger.state 
                                                 }
@@ -112,14 +112,14 @@ class MyRideDetails extends Component {
                             }
                         </div>
 
-                        <p style={{ marginTop: "2em" }}>Informações adicionais: </p>
+                        <h5 style={{ marginTop: "2em", fontWeight: "bold", marginTop: "2em" }}>Informações adicionais: </h5>
 
                         Mensagem inicial: {this.props.ride.hitch_initial_text}<br />
                         {
                             !!this.props.ride.messages ?
                                 this.props.ride.messages.map(message =>
                                     <Row style={{ display: "flex", alignItems: "center", margin: "0.5em auto" }}>
-                                        <Col md="2" >{moment(message.mns_date).format("DD-MM-yyyy HH:mm")} horas</Col>
+                                        <Col md="2" >{moment(message.mns_date).format("DD-MM-yyyy HH:mm")}H.</Col>
                                         <Col md="2">{message.user_name}</Col>
                                         <Col md="6">{message.mns_text}</Col>
                                         <Col md="2"></Col>
@@ -127,11 +127,11 @@ class MyRideDetails extends Component {
                                 ) : "Não existem passageiros"
                         }
                     </Modal.Body>
-                    <Modal.Footer>
+                    <Modal.Footer style= {{ backgroundColor:"#245c8d"}}>
                         <Row style={{ width: "100%", alignItems: "center" }}>
                             <Col md={9}>
                                 <Form.Group>
-                                    <Form.Label>Comentários</Form.Label>
+                                    <Form.Label style= {{ fontWeight: "bold", color: "white"}}>Comentários</Form.Label>
                                     <Form.Control
                                         onChange={this.onChange}
                                         name="message"

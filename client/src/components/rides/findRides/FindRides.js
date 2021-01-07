@@ -87,9 +87,9 @@ class FindRides extends Component {
         return (
 
             <div>
-                <h1 style={{ textAlign: "center" }}>Encontrar Boleia</h1>
+                <h1 style={{ textAlign: "center", fontWeight:"bold" }}>Encontrar Boleia</h1>
                 <Form>
-                    <h2 style={{ marginTop: "0.5em" }}>Pesquisar </h2>
+                    <h2 style={{ marginTop: "0.5em", fontWeight:"bold" }}>Pesquisar </h2>
                     <Row>
                         <Col>
                             <Form.Group >
@@ -125,7 +125,7 @@ class FindRides extends Component {
                         </Col>
 
                     </Row>
-                    <h2 style={{ marginTop: "0.5em" }}>Lista de boleias</h2>
+                    <h2 style={{ marginTop: "0.5em", fontWeight:"bold" }}>Lista de boleias</h2>
                     {this.state.searchResults.map(element => <Row><FindRideInformation ride={element} 
                     user={this.props.user} /></Row>)}
                 </Form>
