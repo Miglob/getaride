@@ -100,9 +100,9 @@ class MyRideDetails extends Component {
                                                 {
                                                     this.props.user == this.props.ride.id_users ?
                                                         <DropdownButton title={passenger.state} size="sm" style={{ marginLeft: "0.5em" }}  >
-                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Pendente")} style= {{ color:"#fdd603" }}>Pendente</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Confirmada")} style= {{ color:"green" }}>Confirmar</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Cancelada")} style= {{ color:"red" }}>Cancelar</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Pendente")} style= {{ color:"#fdd603", fontWeight:"bold" }}>Pendente</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Confirmada")} style= {{ color:"green", fontWeight:"bold" }}>Confirmar</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => this.props.alterPassengerState(this.props.user, passenger.id_passengers, "Cancelada")} style= {{ color:"red", fontWeight:"bold" }}>Cancelar</Dropdown.Item>
                                                         </DropdownButton>
                                                         : passenger.state 
                                                 }

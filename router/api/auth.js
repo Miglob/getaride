@@ -33,7 +33,7 @@ router.post("/signUp", encrypt, async (req, res) => {
 
     let [result] = await database.checkIfUserExists(email);
 
-    console.log(result);
+
 
     if (Array.isArray(result) && result.length) {
       return res.status(500).send("Email já em uso!");
@@ -67,7 +67,7 @@ router.post("/signIn", async (req, res) => {
 
   try {
     let [result] = await database.checkIfUserExists(email);
-    console.log(result);
+
     if (Array.isArray(result) && result.length) {
       authenticate(req, res, result[0].id_users, result[0].user_name, user_password, result[0].user_password)
     } else {
@@ -76,7 +76,7 @@ router.post("/signIn", async (req, res) => {
     }
 
   } catch (e) {
-    console.log(e);
+ 
     return res.status(500).send(e.toString());
 
   }
@@ -103,7 +103,7 @@ router.get("/user", auth, async (req, res) => {
 });
 
 let authenticate = (req, res, user_id, user_name, user_password, bd_password) => {
-  console.log("bosta");
+  
   // Validate password
 
   bcrypt.compare(user_password, bd_password) // plain text, hased text
