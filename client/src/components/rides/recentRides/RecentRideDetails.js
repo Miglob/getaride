@@ -76,7 +76,7 @@ class RecentRideDetails extends Component {
                             }
                         </div>
 
-                        <h5 style={{ marginTop: "2em", fontWeight: "bold" }}>Informações adicionais: </h5>
+                        <h5>Informações adicionais: </h5>
                         Mensagem inicial: {this.props.ride.hitch_initial_text}<br />
                             {
                                 !!this.props.ride.messages ?

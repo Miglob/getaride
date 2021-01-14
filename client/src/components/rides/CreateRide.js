@@ -74,7 +74,7 @@ class CreateRide extends Component {
             <div>
                 <h1 style={{ textAlign: "center", fontWeight: "bold", color:"#245c8d" }}>Criar Boleia</h1>
 
-                <OverlayTrigger trigger="click" placement="right" overlay={
+               {/*} <OverlayTrigger trigger="click" placement="right" overlay={
                     <Popover id="popover-basic">
                         <Popover.Content>
                             departure_time: {this.state.departure_time.toString()}<br />
@@ -87,7 +87,7 @@ class CreateRide extends Component {
                     </Popover>
                 }>
                     <Button variant="success">Click me to see data</Button>
-                </OverlayTrigger>
+            </OverlayTrigger>*/}
 
 
                 <DatePicker setDates={this.setDates} />

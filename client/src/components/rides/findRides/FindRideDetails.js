@@ -94,7 +94,7 @@ class FindRideDetails extends Component {
                     </Modal.Header>
                     <Modal.Body style = {{ fontFamily: "Verdana"}}>
                         <h3 style={{ fontWeight: "bold" }}>Detalhes da boleia:</h3>
-                        <p>Nome: {this.props.ride.user_name}<span style={{ marginLeft: "1em" }}>Ranking: {this.props.ride.ranking}</span> </p>
+                        <p>Nome: {this.props.ride.user_name}{/*<span style={{ marginLeft: "1em" }}>Ranking: {this.props.ride.ranking}</span>*/} </p>
 
                         {/*botao*/}
 

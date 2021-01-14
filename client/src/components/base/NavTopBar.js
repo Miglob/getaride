@@ -47,7 +47,7 @@ class NavTopBar extends Component {
                                 <NavDropdown.Item href="/findRides">Encontrar Boleia</NavDropdown.Item>
                             </NavDropdown> : ""
                         }
-                        <Nav.Link href="/ranking">Ranking</Nav.Link>
+                       {/*} <Nav.Link href="/ranking">Ranking</Nav.Link>*/}
                     </Nav>
                     {this.props.isAuthenticated ? "" : <RegisterModal />}
                     {this.props.isAuthenticated ? "" : <LoginModal />}

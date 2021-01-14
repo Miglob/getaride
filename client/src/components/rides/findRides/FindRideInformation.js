@@ -25,7 +25,7 @@ class FindRideInformation extends Component {
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <img src={GR} style={{ height: "80px", width: "132px" }} />
                         <div style={{ marginLeft: "0.5em", textAlign: "left", fontWeight:"bold" }}>
-                        Condutor(a):  {this.props.ride.user_name} Ranking: {this.props.ride.ranking} <br />
+                        Condutor(a):  {this.props.ride.user_name} {/*Ranking: {this.props.ride.ranking} */}<br />
                         Vai sair em: {moment(this.props.ride.departure_time).format("DD-MM-YYYY [às] HH:mm [horas]")}<br />
                         Origem: {this.props.ride.departure_location}<br />
                         Destino: {this.props.ride.arrival_location}
