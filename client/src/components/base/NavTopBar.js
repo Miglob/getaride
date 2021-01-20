@@ -38,10 +38,10 @@ class NavTopBar extends Component {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" >
                     <Nav className="mr-auto" style ={{marginTop: "2.5em", color: "whitesmoke", fontSize: "20px"}}>
-                        <Nav.Link href="/recentRides" >Boleias recentes</Nav.Link>
+                        <Nav.Link href="/recentRides">Boleias recentes</Nav.Link>
                         <Nav.Link href="/stuff">Sobre nós</Nav.Link>
                         {this.props.isAuthenticated ?
-                            <NavDropdown title="Boleias">
+                            <NavDropdown title="Boleias" id="bosta">
                                 <NavDropdown.Item href="/myRides">As minhas boleias</NavDropdown.Item>
                                 <NavDropdown.Item href="/createRide">Criar Boleia</NavDropdown.Item>
                                 <NavDropdown.Item href="/findRides">Encontrar Boleia</NavDropdown.Item>
