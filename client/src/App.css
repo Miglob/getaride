@@ -35,5 +35,12 @@
   }
 }
 
-
+.boleias{  
+  background-color: transparent !important; 
+  border-color: transparent !important;
+  outline: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
 

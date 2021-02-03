@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { register } from "../../actions/authActions";
 
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form, Button, Alert } from "react-bootstrap";
 
 
 class RegisterModal extends Component {
@@ -13,7 +13,11 @@ class RegisterModal extends Component {
         modal: false,
         user_name: "",
         email: "",
-        user_password: ""
+        user_password: "",
+        user_password_confirm: "",
+
+        showAlert: false,
+        alertMessage: ""
     }
 
     closeModal = () => {
@@ -36,10 +40,50 @@ class RegisterModal extends Component {
 
     formFieldsAreValid() {
 
+        if (!this.state.user_name.trim().length > 0) {
+            this.setState({
+                showAlert: true,
+                alertMessage: "Nome inválido!"
+            });
+            return false;
+        }
+
+        if (!this.state.email.trim().length > 0) {
+            this.setState({
+                showAlert: true,
+                alertMessage: "Email inválido!"
+            });
+            return false;
+        }
+
+        if (!this.state.user_password.trim().length > 0) {
+            this.setState({
+                showAlert: true,
+                alertMessage: "Password inválida!"
+            });
+            return false;
+        }
+
+        if (!this.state.user_password_confirm.trim().length > 0 ||
+            !(this.state.user_password == this.state.user_password_confirm)) {
+            this.setState({
+                showAlert: true,
+                alertMessage: "Password diferentes!"
+            });
+            return false;
+        }
+
+        this.setState({
+            showAlert: false,
+            alertMessage: "Sem erros :)"
+        });
+        
         return (
             this.state.user_name.trim().length > 0 &&
             this.state.email.trim().length > 0 &&
-            this.state.user_password.trim().length > 0
+            this.state.user_password.trim().length > 0 &&
+            this.state.user_password_confirm.trim().length > 0 &&
+            this.state.user_password == this.state.user_password_confirm
         )
     };
 
@@ -61,6 +105,7 @@ class RegisterModal extends Component {
                     user_name: "",
                     email: "",
                     user_password: "",
+                    user_password_confirm: "",
                 },
                 this.closeModal()
             );
@@ -74,22 +119,30 @@ class RegisterModal extends Component {
                 <Button onClick={this.openModal}>Registar</Button>
 
                 <Modal show={this.state.modal} onHide={this.closeModal}>
-                    <Modal.Header closeButton style= {{ backgroundColor: "#245c8d", color:"white" }}>
+                    <Modal.Header closeButton style={{ backgroundColor: "#245c8d", color: "white" }}>
                         <Modal.Title>Registar</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <form onSubmit={this.deliver}>
+                            <Alert show={this.state.showAlert} variant={"danger"}>
+                                {this.state.alertMessage}
+                            </Alert>
+
                             <Form.Group>
                                 <Form.Label>Nome</Form.Label>
-                                <Form.Control onChange={this.onChange} name="user_name" placeholder="nome..." />
+                                <Form.Control onChange={this.onChange} name="user_name" placeholder="nome..." autocomplete="new-password" />
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control onChange={this.onChange} name="email" placeholder="email..." />
+                                <Form.Control onChange={this.onChange} type="email" name="email" placeholder="email..." autocomplete="new-password" />
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control onChange={this.onChange} name="user_password" placeholder="password..." />
+                                <Form.Control onChange={this.onChange} type="password" name="user_password" placeholder="password..." autocomplete="new-password" />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Confirmar Password</Form.Label>
+                                <Form.Control onChange={this.onChange} type="password" name="user_password_confirm" placeholder="confirmar password..." autocomplete="new-password" />
                             </Form.Group>
                             <Button type="submit">Registar</Button>
                         </form>

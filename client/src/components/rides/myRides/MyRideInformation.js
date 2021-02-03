@@ -32,15 +32,15 @@ class MyRideInformation extends Component {
 
     onAgreeAction = () => {
         this.props.deleteRide(this.props.user, this.props.ride.id_hitchhikes)
-        this.setState({dialogOpen: false})
+        this.setState({ dialogOpen: false })
     };
 
     onDisagreeAction = () => {
-        this.setState({dialogOpen: false})
+        this.setState({ dialogOpen: false })
     };
 
     onDeleteAction = () => {
-        this.setState({dialogOpen: true})
+        this.setState({ dialogOpen: true })
     };
 
     render() {
@@ -69,12 +69,14 @@ class MyRideInformation extends Component {
                             <div style={{ fontWeight: "bold" }}>
                                 {this.props.ride.id_user_driver} Oferece {this.props.ride.num_seats} lugar(es)<br />
                                 <MyRideDetails ride={this.props.ride} user={this.props.user} /> <br />
-                                <Button
-                                    size="sm"
-                                    variant="danger"
-                                    disabled={this.props.user != this.props.ride.id_users}
-                                    onClick={this.onDeleteAction}
-                                    style={{ marginTop: "0.5em" }}><b>Anular</b></Button>
+                                {this.props.user != this.props.ride.id_users ?
+                                    "" :
+                                    <Button
+                                        size="sm"
+                                        variant="danger"
+                                        onClick={this.onDeleteAction}
+                                        style={{ marginTop: "0.5em" }}><b>Anular</b></Button>}
+
 
                             </div>
                         </div>

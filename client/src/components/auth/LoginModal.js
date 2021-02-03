@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { login } from "../../actions/authActions";
 
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form, Button, Alert } from "react-bootstrap";
 
 
 class LoginModal extends Component {
@@ -12,7 +12,10 @@ class LoginModal extends Component {
     state = {
         modal: false,
         email: "",
-        user_password: ""
+        user_password: "",
+
+        showAlert: false,
+        alertMessage: ""
     }
 
     static propTypes = {
@@ -49,6 +52,27 @@ class LoginModal extends Component {
 
     formFieldsAreValid() {
 
+        if (!this.state.email.trim().length > 0) {
+            this.setState({
+                showAlert: true,
+                alertMessage: "Email inválido!"
+            });
+            return false;
+        }
+
+        if (!this.state.user_password.trim().length > 0) {
+            this.setState({
+                showAlert: true,
+                alertMessage: "Password inválida!"
+            });
+            return false;
+        }
+
+        this.setState({
+            showAlert: false,
+            alertMessage: "Sem erros :)"
+        });
+
         return (
             this.state.email.trim().length > 0 &&
             this.state.user_password.trim().length > 0
@@ -64,7 +88,7 @@ class LoginModal extends Component {
             const { email, user_password } = this.state;
 
             const user = { email, user_password }
-        
+
             // Attempt to login
             this.props.login(user);
         }
@@ -73,21 +97,25 @@ class LoginModal extends Component {
     render() {
         return (
             <div>
-                <Button onClick={this.openModal} style = {{marginLeft : "1em"}}>Login</Button>
+                <Button onClick={this.openModal} style={{ marginLeft: "1em" }}>Login</Button>
 
                 <Modal show={this.state.modal} onHide={this.closeModal}>
-                    <Modal.Header closeButton style= {{ backgroundColor: "#245c8d", color:"white" }} >
+                    <Modal.Header closeButton style={{ backgroundColor: "#245c8d", color: "white" }} >
                         <Modal.Title>Login</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form onSubmit = {this.deliver}>
+                        <form onSubmit={this.deliver}>
+                            <Alert show={this.state.showAlert} variant={"danger"}>
+                                {this.state.alertMessage}
+                            </Alert>
+
                             <Form.Group>
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control onChange={this.onChange} name="email" placeholder="email..." />
+                                <Form.Control onChange={this.onChange} type="email" name="email" placeholder="email..." />
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control onChange={this.onChange} name="user_password" placeholder="password..." />
+                                <Form.Control onChange={this.onChange} type="password" name="user_password" placeholder="password..." />
                             </Form.Group>
                             <Button type="submit">Login</Button>
                         </form>

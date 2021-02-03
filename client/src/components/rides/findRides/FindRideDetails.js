@@ -12,6 +12,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import AlertDialog from "../../base/AlertDialog";
 
 
 class FindRideDetails extends Component {
@@ -20,8 +21,13 @@ class FindRideDetails extends Component {
     //Condutor não se pode associar à própria boleia
 
     state = {
-        modalOpen: false, 
-        message: ""
+        modalOpen: false,
+        message: "",
+
+        dialogOpen: false,
+        dialogTitle: "Associar Boleia?",
+        dialogContent: "Tem a certeza que pretende associar-se a esta boleia? Esta açção vai precisar da confirmação do condutor!"
+
     }
 
     static propTypes = {
@@ -36,19 +42,17 @@ class FindRideDetails extends Component {
     }
 
     createPassenger = () => {
-
         this.props.createPassenger(this.props.user.id_users, this.props.ride.id_hitchhikes)
     }
 
     createMessage = () => {
 
-        if(!!this.state.message && this.state.message.trim().length > 0)
-        {
+        if (!!this.state.message && this.state.message.trim().length > 0) {
             this.props.createMessage(this.state.message, this.props.user.id_users, this.props.ride.id_hitchhikes, false);
             this.setState({
                 message: ""
-              });
-      
+            });
+
 
         }
     }
@@ -71,9 +75,23 @@ class FindRideDetails extends Component {
         })
     }
 
+    onAssociateAction = () => {
+        this.setState({ dialogOpen: true })
+    };
+
+    onAgreeAction = () => {
+        this.createPassenger()
+        this.setState({ dialogOpen: false })
+    };
+
+    onDisagreeAction = () => {
+        this.setState({ dialogOpen: false })
+    };
+
     render() {
         return (
             <>
+
                 <Button variant="primary" onClick={this.toggle} style={{ marginTop: "0.5em" }}>
                     <b>+ Detalhes</b>
                 </Button>
@@ -85,14 +103,21 @@ class FindRideDetails extends Component {
                     keyboard={false}
                     size="lg"
                 >
-                    <Modal.Header closeButton style= {{ backgroundColor: "#245c8d", color: "whitesmoke" }}>
+                    <AlertDialog
+                        open={this.state.dialogOpen}
+                        title={this.state.dialogTitle}
+                        content={this.state.dialogContent}
+                        agreeAction={this.onAgreeAction}
+                        disagreeAction={this.onDisagreeAction}
+                    />
+                    <Modal.Header closeButton style={{ backgroundColor: "#245c8d", color: "whitesmoke" }}>
                         <Modal.Title>Detalhes</Modal.Title>
 
-                        <Button onClick={this.createPassenger}
+                        <Button onClick={this.onAssociateAction}
                             disabled={!this.props.user || (this.props.user && this.props.user.id_users === this.props.ride.id_users) || (this.props.user && this.checkIfUserIsPassenger())}
                             style={{ marginLeft: "65%" }}>Associar à boleia</Button>
                     </Modal.Header>
-                    <Modal.Body style = {{ fontFamily: "Verdana"}}>
+                    <Modal.Body style={{ fontFamily: "Verdana" }}>
                         <h3 style={{ fontWeight: "bold" }}>Detalhes da boleia:</h3>
                         <p>Nome: {this.props.ride.user_name}{/*<span style={{ marginLeft: "1em" }}>Ranking: {this.props.ride.ranking}</span>*/} </p>
 
@@ -109,7 +134,7 @@ class FindRideDetails extends Component {
                             <Col>Hora chegada: {moment(this.props.ride.arrival_time).format("DD-MM-yyyy HH:mm")}</Col>
                         </Row>
 
-                        <h5 style={{ marginTop: "2em", fontWeight: "bold", marginTop: "2em" }}>Passageiros: </h5>
+                        <h5 style={{ marginTop: "2em", fontWeight: "bold" }}>Passageiros: </h5>
 
                         <div>
                             {
@@ -123,7 +148,7 @@ class FindRideDetails extends Component {
                             }
                         </div>
 
-                        <h5 style= {{ marginTop: "2em", fontWeight: "bold", marginTop: "2em" }}>Informações adicionais: </h5>
+                        <h5 style={{ marginTop: "2em", fontWeight: "bold" }}>Informações adicionais: </h5>
                         Mensagem inicial: {this.props.ride.hitch_initial_text}<br />
                         {
                             !!this.props.ride.messages ?
@@ -137,11 +162,11 @@ class FindRideDetails extends Component {
                                 ) : "Não existem passageiros"
                         }
                     </Modal.Body>
-                    <Modal.Footer style= {{ backgroundColor:"#245c8d"}}>
+                    <Modal.Footer style={{ backgroundColor: "#245c8d" }}>
                         <Row style={{ width: "100%", alignItems: "center" }}>
                             <Col md={9}>
                                 <Form.Group >
-                                    <Form.Label style= {{ fontWeight: "bold", color: "white"}}>Comentários</Form.Label>
+                                    <Form.Label style={{ fontWeight: "bold", color: "white" }}>Comentários</Form.Label>
                                     <Form.Control
                                         onChange={this.onChange}
                                         name="message"
@@ -152,7 +177,7 @@ class FindRideDetails extends Component {
                                 </Form.Group>
                             </Col>
                             <Col md={3}>
-                                <Button variant="primary" onClick = {this.createMessage} style={{ marginRight: "2em" }}>Criar mensagem</Button>
+                                <Button variant="primary" onClick={this.createMessage} style={{ marginRight: "2em" }}>Criar mensagem</Button>
                             </Col>
                         </Row>
                     </Modal.Footer>
